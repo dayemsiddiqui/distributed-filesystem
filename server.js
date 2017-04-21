@@ -37,11 +37,15 @@ io.on('connection', function(socket){
 
   socket.on('message', function (data, from) {
   //  socket.emit('serverMessage', 'Got a message!');
-   console.log('I received a message by ', from, ' saying ', data);
+   console.log('I received a message by ', ' saying ', data);
 });
 
 });
 
+function broadcast(tag, msg) {
+  io.emit(tag, msg);
+  serv_sock.map((val) => {val.emit(tag, msg);})
+}
 
 function getAnotherCommand() {
     prompt.get( config.prompt, function(err, result) {
@@ -53,7 +57,7 @@ function getAnotherCommand() {
               console.log("Total connections: ", connections.length);
               console.log("Here is the list of connected sockets: ");
               connections.map((val) => { console.log(val); });
-              io.emit('message', "this is a test");
+              broadcast("message", "Hello World")
             }
             getAnotherCommand();
         }
