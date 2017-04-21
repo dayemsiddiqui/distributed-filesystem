@@ -2,12 +2,20 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
-
-var io = require('socket.io-client');
-
-var socket = io('http://192.168.15.53:3000/');
-
+var io_client = require('socket.io-client');
 var prompt = require('prompt');
+import {config} from './config';
+
+var serv_sock = [];
+
+for(var i = 0; i < config.server_addr.length; i++){
+  if(config.server_addr[i] == config.my_addr) continue;
+  var s_addr = 'http://' + config.server_addr[i] + ':3000/';
+  serv_sock.push(io_client(s_addr));
+}
+
+
+
 
 http.listen(3000, function(){
   console.log('Sever started on port 3000');
