@@ -1,6 +1,8 @@
 import debug from './debug';
 import {DEV} from './header';
-import {FILE_TABLE} from './'
+import {FILE_TABLE} from './';
+var dl = require('delivery');
+
 
 export class EventHandler {
 
@@ -13,7 +15,8 @@ export class EventHandler {
     switch (event)
       {
          case 'DOWN_FILE':  debug.log(event + ' handled', DEV);
-
+         var s_addr = 'http://192.168.1.2:3000/';
+         socket = io_client(s_addr);
           var delivery = dl.listen(socket);
           delivery.on('receive.success',function(file){
 
@@ -37,7 +40,7 @@ export class EventHandler {
          case 'SEND_FILE_TABLE': debug.log(event + ' handled', DEV);
          break;
 
-         case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);
+         
 
          case 'UPDATE_LOCAL_FILE_TABLE': debug.log(event + ' broadcasted', DEV);
          break;
@@ -45,6 +48,10 @@ export class EventHandler {
          case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
          break;
 
+         case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);
+
+         var s_addr = 'http://192.168.1.12:3000/';
+         socket = io_client(s_addr);
          delivery = dl.listen( socket );
           delivery.connect();
 

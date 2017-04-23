@@ -2,8 +2,9 @@ var prompt = require('prompt');
 import {config} from './config';
 import debug from './debug';
 import {DEV} from './header';
+import {getIO} from './connection';
 import {Actions} from './actions';
-
+import {EventHandler} from './eventHandler';
 
 export const getAnotherCommand = () => {
 
@@ -34,6 +35,12 @@ export const getAnotherCommand = () => {
           Actions.createFile(statement[1]);
         }
         else{
+          if(DEV){
+            if(command == 'upload'){
+              //EventHandler.handleEvent('UPLOAD_FILE',{'f_name':'hello.txt'});
+              //getIO().emit('event', {'event':'UPLOAD_FILE', 'f_name':'hello.txt'});
+            }
+          }
           //invalidCommand();
         }
           getAnotherCommand();

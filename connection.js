@@ -2,7 +2,6 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var io_client = require('socket.io-client');
-var dl  = require('delivery');
 import {config} from './config';
 import {EventHandler} from './eventHandler';
 import {DEV} from './header';
@@ -38,8 +37,8 @@ export function initServer(){
      console.log('I received a message by ', ' saying ', data);
   });
 
-      socket.on('event', function (event, params) {
-        EventHander.handleEvent(event, params);
+      socket.on('event', function (data) {
+        EventHandler.handleEvent(data.events, data.f_name);
   });
 
   });
