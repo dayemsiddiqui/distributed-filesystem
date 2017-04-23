@@ -40,6 +40,9 @@ export const getAnotherCommand = () => {
               //EventHandler.handleEvent('UPLOAD_FILE',{'f_name':'hello.txt'});
               //getIO().emit('event', {'event':'UPLOAD_FILE', 'f_name':'hello.txt'});
             }
+            if(command == 'message'){
+              EventHandler.broadcastEvent('USR_MSG',{'message':statement[1]});
+            }
           }
           //invalidCommand();
         }
