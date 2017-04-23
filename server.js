@@ -1,12 +1,12 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var fs = require('fs');
 var io_client = require('socket.io-client');
 var readlineSync = require('readline-sync');
 var prompt = require('prompt');
 import {config} from './config';
 import debug from './debug';
+import {listFiles} from './actions';
 var DEV = false;
 
 var serv_sock = [];
@@ -27,16 +27,16 @@ http.listen(3000, function(){
 
 io.on('connection', function(socket){
   debug.log('A user connected', DEV);
+
   var endpoint = socket.request.connection._peername;
   var ip = endpoint.address.split(":");
   connections.push(ip[ip.length - 1] + ":" + endpoint.port);
-  //Whenever someone disconnects this piece of code executed
+
   socket.on('disconnect', function () {
     debug.log('A user disconnected', DEV);
   });
 
   socket.on('message', function (data, from) {
-  //  socket.emit('serverMessage', 'Got a message!');
    console.log('I received a message by ', ' saying ', data);
 });
 
@@ -52,12 +52,13 @@ function getAnotherCommand() {
         if (err) done(err);
         else {
           // console.log(result);
-          var command = result.question.split(" ");
-          if(command == 'ls_conn'){
-              console.log("Total connections: ", connections.length);
-              console.log("Here is the list of connected sockets: ");
-              connections.map((val) => { console.log(val); });
-              broadcast("message", "Hello World")
+          var statement = result.question.split(" ");
+          var command = statement[0];
+          if(command == 'message'){
+              var message = statement[1];
+              broadcast("message", message)
+            }else if(command == 'ls'){
+              listFiles();
             }
             getAnotherCommand();
         }
@@ -65,7 +66,7 @@ function getAnotherCommand() {
 }
 
 function done(err) {
-    // console.error(err);
+    console.error(err);
 }
 
 const main = () => {
