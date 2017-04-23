@@ -1,16 +1,30 @@
 import debug from './debug';
 import {DEV} from './header';
-export default class EventHandler {
+
+export class EventHandler {
 
   constructor(){
 
   }
 
-  handleEvent(event){
+  static handleEvent(event, params){
 
     switch (event)
       {
          case 'DOWN_FILE':  debug.log(event + ' handled', DEV);
+
+          var delivery = dl.listen(socket);
+          delivery.on('receive.success',function(file){
+            
+            fs.writeFile(PATH+file.name, file.buffer, function(err){
+              if(err){
+                console.log('File could not be saved: ' + err);
+              }else{
+                console.log('File ' + file.name + " saved");
+              };
+            });
+          }); 
+
          break;
 
          case 'REQ_FILE_TABLE': debug.log(event + ' handled', DEV);
@@ -23,6 +37,22 @@ export default class EventHandler {
          break;
 
          case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);
+
+         delivery = dl.listen( socket );
+          delivery.connect();
+          
+          delivery.on('delivery.connect',function(delivery){
+            delivery.send({
+              name: params.f_name,
+              path : PATH,
+            });
+
+            delivery.on('send.success',function(file){
+              console.log('File sent successfully!');
+            });
+
+          });  
+
          break;
 
          default:  debug.log(event + ' handled', DEV);
@@ -30,7 +60,7 @@ export default class EventHandler {
 
   }
 
-  broadcastEvent(event, obj){
+  static broadcastEvent(event, obj){
     switch (event)
       {
          case 'DOWN_FILE':  debug.log(event + ' broadcasted', DEV);

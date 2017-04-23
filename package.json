@@ -14,6 +14,7 @@
   "author": "Dayem Siddiqui",
   "license": "MIT",
   "dependencies": {
+    "delivery": "0.0.6",
     "express": "^4.15.2",
     "prompt": "^1.0.0",
     "readline-sync": "^1.4.7",
