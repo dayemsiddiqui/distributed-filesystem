@@ -2,7 +2,7 @@ var prompt = require('prompt');
 import {config} from './config';
 import {listFiles} from './actions';
 import debug from './debug';
-var DEV = true;
+import {DEV} from './header';
 
 
 export const getAnotherCommand = () => {
@@ -14,23 +14,23 @@ export const getAnotherCommand = () => {
         var statement = result.question.split(" ");
         var command = statement[0];
         if(command == 'ls'){
-          debug.log("Another Commandl: ls", DEV)
+          debug.log("Another Command: ls", DEV)
           //listFiles();
         }
         else if(command == 'mkdir'){
-          debug.log("Another Commandl: mkdir", DEV)
+          debug.log("Another Command: mkdir", DEV)
           //makeDirectory(statement[1]);
         }
         else if(command == 'pwd'){
-          debug.log("Another Commandl: pwd", DEV)
+          debug.log("Another Command: pwd", DEV)
           //currentDirectory();
         }
         else if(command == 'cd'){
-          debug.log("Another Commandl: cd", DEV)
+          debug.log("Another Command: cd", DEV)
           //changeDirectory(statement[1]);
         }
         else if(command == 'touch'){
-          debug.log("Another Commandl: touch", DEV)
+          debug.log("Another Command: touch", DEV)
           //createFile(statement[1]);
         }
         else{
