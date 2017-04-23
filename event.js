@@ -19,11 +19,12 @@ export default EVENTS = {
     NODE_ID: '',
     SOURCE: '',
     FILE_TABLE: {}
-  }
+  },
   UPLOAD_FILE: {
     FILE: '',
     NODE_ID: '',
     SOURCE: '',
-  }
+  },
+  UPDATE_LOCAL_FILE_TABLE: {},
 
 }

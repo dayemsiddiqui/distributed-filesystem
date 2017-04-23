@@ -1,8 +1,8 @@
 var prompt = require('prompt');
 import {config} from './config';
-import {listFiles} from './actions';
 import debug from './debug';
 import {DEV} from './header';
+import {Actions} from './actions';
 
 
 export const getAnotherCommand = () => {
@@ -15,7 +15,7 @@ export const getAnotherCommand = () => {
         var command = statement[0];
         if(command == 'ls'){
           debug.log("Another Command: ls", DEV)
-          //listFiles();
+          Actions.listFiles();
         }
         else if(command == 'mkdir'){
           debug.log("Another Command: mkdir", DEV)
@@ -30,14 +30,14 @@ export const getAnotherCommand = () => {
           //changeDirectory(statement[1]);
         }
         else if(command == 'touch'){
-          debug.log("Another Command: touch", DEV)
-          //createFile(statement[1]);
+          debug.log("Another Command: touch", DEV);
+          Actions.createFile(statement[1]);
         }
         else{
           //invalidCommand();
         }
           getAnotherCommand();
         }
-      
+
   });
 }
