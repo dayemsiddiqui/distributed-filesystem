@@ -1,6 +1,8 @@
 import debug from './debug';
 import {DEV} from './header';
-import {FILE_TABLE} from './';
+import {FILE_TABLE} from './fileTable';
+import {broadcast} from './connection';
+
 var dl = require('delivery');
 
 
@@ -40,7 +42,7 @@ export class EventHandler {
          case 'SEND_FILE_TABLE': debug.log(event + ' handled', DEV);
          break;
 
-         
+
 
          case 'UPDATE_LOCAL_FILE_TABLE': debug.log(event + ' broadcasted', DEV);
          break;
@@ -96,6 +98,11 @@ export class EventHandler {
          break;
 
          case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
+         break;
+
+         case 'USR_MSG':
+         broadcast('message', obj.message);
+         debug.log(event + ' broadcasted', DEV);
          break;
 
          default:  debug.log(event + ' broadcasted', DEV);

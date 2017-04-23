@@ -31,6 +31,7 @@ SEND_FILE_TABLE : (SourceNode ID, Dest Node ID) : Sends the File Table to the gi
 UPLOAD_FILE : (FILE, Source Node ID, Dest Node ID) : Sends File to the given node.
 UPDATE_LOCAL_FILE_TABLE: Update the local files in the local file table.
 UPDATE_LOCAL_FILE: Update a single local file in the local file table.
+USR_MSG: Each node can broadcast a custom message.
 
 
 

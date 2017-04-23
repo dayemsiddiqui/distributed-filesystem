@@ -7,7 +7,7 @@ import {EventHandler} from './eventHandler';
 import {DEV} from './header';
 import debug from './debug';
 
-var serv_sock = [];
+var serv_sock = []; // Used in broadcast function
 var connections = [];
 
 export function initServer(){
