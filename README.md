@@ -1,4 +1,4 @@
-![Logo](http://imgur.com/a/wYEoC)
+![Logo](http://imgur.com/acVbOfD)
 
 # GormintFS
 ### A cross platform distibuted filesystem
