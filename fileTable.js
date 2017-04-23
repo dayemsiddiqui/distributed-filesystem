@@ -1,4 +1,4 @@
-export FILE_TABLE = {
+export var FILE_TABLE = {
 	GLOBAL : [],
 
 	LOCAL :	[],
