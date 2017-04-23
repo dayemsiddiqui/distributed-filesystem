@@ -3,6 +3,7 @@ import {DEV, ROOT} from './header';
 import debug from './debug';
 import {config} from './config';
 import {FILE_TABLE} from './fileTable'
+import {EventHandler} from './eventHandler';
 
 var PATH = ROOT; 
 export class Actions {
@@ -66,6 +67,8 @@ static initializeFileTable(){
 
       });
     });
+
+    EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
 }
 
 static showFileTable(){
