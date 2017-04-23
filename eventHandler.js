@@ -53,7 +53,7 @@ export class EventHandler {
          case 'UPDATE_FILE_TBL':
         //  FILE_TABLE.GLOBAL = data.fileTable;
          console.log("GLOBAL FILE TABLE", data);
-         debug.log(event + ' handled', DEV);
+         debug.log(data.event + ' handled', DEV);
          break;
 
          case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);
