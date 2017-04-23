@@ -1,1 +1,2 @@
-# distributed-filesystem
+# GormintFS
+### A cross platform distibuted filesystem
