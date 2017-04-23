@@ -96,12 +96,17 @@ export class EventHandler {
   }
 
   updateLocalFile(obj){
+    var doesExist = false;
     var local_file = {
       F_ID : obj.F_ID,
       F_NAME : obj.FNAME,
       FS_DWNLD_TIME : obj.FS_DWNLD_TIME,
     }
-
+    FILE_TABLE.LOCAL.map((file) => {
+      if(file.F_NAME == obj.F_NAME){
+        file.FS_DWNLD_TIME = obj.FS_DWNLD_TIME;
+      }
+    });
     FILE_TABLE.LOCAL.push(local_file);
   }
 
