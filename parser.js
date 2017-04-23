@@ -34,6 +34,10 @@ export const getAnotherCommand = () => {
           debug.log("Another Command: touch", DEV);
           Actions.createFile(statement[1]);
         }
+        else if(command == 'exit'){
+          process.exit(0);
+          console.log("Exited");
+        }
         else{
           if(DEV){
             if(command == 'upload'){

@@ -50,6 +50,9 @@ export class EventHandler {
          case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
          break;
 
+         case 'UPDATE_FILE_TBL': debug.log(event + ' broadcasted', DEV);
+         break;
+
          case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);
 
          var s_addr = 'http://192.168.1.12:3000/';
@@ -98,6 +101,11 @@ export class EventHandler {
          break;
 
          case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
+         break;
+
+         case 'BRDCST_FILE_TBL':
+         broadcast('event', {event:'UPDATE_FILE_TBL' ,fileTable: FILE_TABLE.GLOBAL});
+         debug.log(event + ' broadcasted', DEV);
          break;
 
          case 'USR_MSG':

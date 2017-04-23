@@ -18,7 +18,7 @@ DESIGN DECISIONS:
 3. Every message will be broadcasted along with the relevant receivers addresses.
    The relevant receivers will handle the message the rest will just ignore it.
 4. No two files will have the same name and path.
-
+5. Each node will broadcast its file table if the file table is updated.
 
 =========
 PROTOCOLS:
@@ -32,6 +32,8 @@ UPLOAD_FILE : (FILE, Source Node ID, Dest Node ID) : Sends File to the given nod
 UPDATE_LOCAL_FILE_TABLE: Update the local files in the local file table.
 UPDATE_LOCAL_FILE: Update a single local file in the local file table.
 USR_MSG: Each node can broadcast a custom message.
+BRDCST_FILE_TBL: Broadcasts its global file table to the rest of the nodes.
+UPDATE_FILE_TBL: Compares the received file table with the own GOBAL file table and updates the changes.
 
 
 
