@@ -55,14 +55,15 @@ export class Actions {
 static initializeFileTable(){
 	fs.readdir(PATH, (err, files) => {
       files.forEach(file => {
-        console.log(file);
+      	var my_ip = config.my_addr;
         var f =
         {
         	'F_ID': file,
 			'F_NAME': file,
 			'TIME_STAMP': new Date().toString(),
-			'NODE_LIST': [config.my_addr],
+			'NODE_LIST': [my_ip],
         };
+        console.log(config.my_addr);
         FILE_TABLE.GLOBAL.push(f);
 
       });
