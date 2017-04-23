@@ -3,13 +3,15 @@
 =========
 THEORY:
 =========
-
+---------------
 REPLICATION:
+---------------
 1. DROPBOX model, where all files are present everywhere.
 2. Download file on run-time (on demand)
 
-
+---------------
 DESIGN DECISIONS:
+---------------
 
 1. Latest Time Stamp would be considered.
 2. Following Dropbox Model for replication
@@ -31,20 +33,33 @@ UPLOAD_FILE : (FILE, Source Node ID, Dest Node ID) : Sends File to the given nod
 PAGE TABLE:
 =========
 
-FILE_ID:
+GLOBAL:
+---------------
+F_ID:
+F_NAME:
 TIME_STAMP:
 NODE_LIST:
+---------------
+
+LOCAL:
+---------------
+F_ID :
+F_NAME :
+FS_DWNLD_TIME :
+---------------
+
 
 =========
 LOCAL:
 =========
 
 Functions:
+---------------
 Comparing File Table
 Monitoring current structure
+---------------
 
 Variables:
-Local_File_Table = [FILE_ID, FS_DOWNLOAD_TIME ]
 
 
 =========
