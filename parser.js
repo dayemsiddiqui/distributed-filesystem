@@ -19,15 +19,15 @@ export const getAnotherCommand = () => {
         }
         else if(command == 'mkdir'){
           debug.log("Another Command: mkdir", DEV)
-          //makeDirectory(statement[1]);
+          Actions.createDirectory(statement[1]);
         }
         else if(command == 'pwd'){
           debug.log("Another Command: pwd", DEV)
-          //currentDirectory();
+          Actions.currentDirectory();
         }
         else if(command == 'cd'){
           debug.log("Another Command: cd", DEV)
-          //changeDirectory(statement[1]);
+          Actions.changeDirectory(statement[1]);
         }
         else if(command == 'touch'){
           debug.log("Another Command: touch", DEV);

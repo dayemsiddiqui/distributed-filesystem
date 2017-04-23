@@ -1,7 +1,8 @@
 var fs = require('fs');
-import {PATH, DEV} from './header';
+import {DEV, ROOT} from './header';
 import debug from './debug';
 
+var PATH = ROOT; 
 export class Actions {
 
   static listFiles() {
@@ -21,6 +22,31 @@ export class Actions {
         debug.log("The file was saved!", DEV);
     }
   });
+  }
+
+  static createDirectory(dirName){
+    try {
+      fs.mkdirSync(PATH+dirName);
+    } catch(e) {
+      if (e.code != 'EEXIST') throw e;
+    }
+  }
+
+  static currentDirectory(){
+    console.log("Current Directory: " + PATH);
+  }
+
+  static changeDirectory(str){
+    if(str == ".."){
+      PATH =  PATH.split("/").slice(0,-2).join("/") + "/";
+    }else{
+      if (fs.existsSync(PATH + '/' + str)) {
+          PATH = PATH + '/' + str;
+      }else{
+        console.warn("Directory does not exist");
+      }
+
+    }
   }
 
 }
