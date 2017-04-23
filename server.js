@@ -2,11 +2,9 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var io_client = require('socket.io-client');
-var readlineSync = require('readline-sync');
-var prompt = require('prompt');
 import {config} from './config';
 import debug from './debug';
-import {listFiles} from './actions';
+import {getAnotherCommand} from './parser';
 var DEV = false;
 
 var serv_sock = [];
@@ -16,7 +14,6 @@ for(var i = 0; i < config.server_addr.length; i++){
   if(config.server_addr[i] == config.my_addr) continue;
   var s_addr = 'http://' + config.server_addr[i] + ':3000/';
   serv_sock.push(io_client(s_addr));
-  // connections.push(s_addr);
 }
 
 
@@ -45,28 +42,6 @@ io.on('connection', function(socket){
 function broadcast(tag, msg) {
   io.emit(tag, msg);
   serv_sock.map((val) => {val.emit(tag, msg);})
-}
-
-function getAnotherCommand() {
-    prompt.get( config.prompt, function(err, result) {
-        if (err) done(err);
-        else {
-          // console.log(result);
-          var statement = result.question.split(" ");
-          var command = statement[0];
-          if(command == 'message'){
-              var message = statement[1];
-              broadcast("message", message)
-            }else if(command == 'ls'){
-              listFiles();
-            }
-            getAnotherCommand();
-        }
-    })
-}
-
-function done(err) {
-    console.error(err);
 }
 
 const main = () => {
