@@ -12,9 +12,9 @@ export class EventHandler {
 
   }
 
-  static handleEvent(event, params){
+  static handleEvent(data){
 
-    switch (event)
+    switch (data.event)
       {
          case 'DOWN_FILE':  debug.log(event + ' handled', DEV);
          var s_addr = 'http://192.168.1.2:3000/';
@@ -50,7 +50,10 @@ export class EventHandler {
          case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
          break;
 
-         case 'UPDATE_FILE_TBL': debug.log(event + ' broadcasted', DEV);
+         case 'UPDATE_FILE_TBL':
+        //  FILE_TABLE.GLOBAL = data.fileTable;
+         console.log("GLOBAL FILE TABLE", data);
+         debug.log(event + ' handled', DEV);
          break;
 
          case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);

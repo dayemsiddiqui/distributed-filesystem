@@ -38,7 +38,7 @@ export function initServer(){
   });
 
       socket.on('event', function (data) {
-        EventHandler.handleEvent(data.events, data.f_name);
+        EventHandler.handleEvent(data);
   });
 
   });
