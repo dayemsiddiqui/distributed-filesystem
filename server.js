@@ -5,7 +5,7 @@ var io_client = require('socket.io-client');
 import {config} from './config';
 import debug from './debug';
 import {getAnotherCommand} from './parser';
-var DEV = false;
+import {DEV} from './header';
 
 var serv_sock = [];
 var connections = [];
@@ -15,6 +15,7 @@ for(var i = 0; i < config.server_addr.length; i++){
   var s_addr = 'http://' + config.server_addr[i] + ':3000/';
   serv_sock.push(io_client(s_addr));
 }
+
 
 
 

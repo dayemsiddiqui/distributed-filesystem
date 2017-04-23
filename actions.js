@@ -1,4 +1,3 @@
-
 var fs = require('fs');
 export const listFiles = () => {
   console.log("List all the files: ");
