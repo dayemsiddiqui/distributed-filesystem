@@ -1,6 +1,8 @@
 var fs = require('fs');
 import {DEV, ROOT} from './header';
 import debug from './debug';
+import {config} from './config';
+import {FILE_TABLE} from './fileTable'
 
 var PATH = ROOT; 
 export class Actions {
@@ -48,5 +50,26 @@ export class Actions {
 
     }
   }
+
+static initializeFileTable(){
+	fs.readdir(PATH, (err, files) => {
+      files.forEach(file => {
+        console.log(file);
+        var f =
+        {
+        	'F_ID': file,
+			'F_NAME': file,
+			'TIME_STAMP': new Date().toString(),
+			'NODE_LIST': [config.my_addr],
+        };
+        FILE_TABLE.GLOBAL.push(f);
+
+      });
+    });
+}
+
+static showFileTable(){
+	console.log(FILE_TABLE.GLOBAL)
+}
 
 }

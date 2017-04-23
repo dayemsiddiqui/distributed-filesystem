@@ -40,6 +40,9 @@ export const getAnotherCommand = () => {
         }
         else{
           if(DEV){
+            if(command == 'FILE_TABLE'){
+              Actions.showFileTable();
+            }
             if(command == 'upload'){
               //EventHandler.handleEvent('UPLOAD_FILE',{'f_name':'hello.txt'});
               //getIO().emit('event', {'event':'UPLOAD_FILE', 'f_name':'hello.txt'});
