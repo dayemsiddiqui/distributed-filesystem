@@ -19,11 +19,11 @@ DESIGN DECISIONS:
 PROTOCOLS:
 =========
 
-DOWN_FILE : (File ID, Node ID) : Downloads a specific file from a node
-REQ_FILE_TABLE : (Node ID) : Happens on connection. Receives File Table from the given Node
-FORCE_UPDATE : (Node ID) : Force the given node to do a "REQ_FILE_TABLE"
-SEND_FILE_TABLE : (Node ID) : Sends the File Table to the given Node.
-UPLOAD_FILE : (FILE, Node ID) : Sends File to the given node.
+DOWN_FILE : (File ID, Source Node ID, Dest Node ID) : Downloads a specific file from a node
+REQ_FILE_TABLE : (Source Node ID, Dest Node ID) : Happens on connection. Receives File Table from the given Node
+FORCE_UPDATE : (Source Node ID, Dest Node ID) : Force the given node to do a "REQ_FILE_TABLE"
+SEND_FILE_TABLE : (SourceNode ID, Dest Node ID) : Sends the File Table to the given Node.
+UPLOAD_FILE : (FILE, Source Node ID, Dest Node ID) : Sends File to the given node.
 
 
 
@@ -45,3 +45,13 @@ Monitoring current structure
 
 Variables:
 Local_File_Table = [FILE_ID, FS_DOWNLOAD_TIME ]
+
+
+=========
+Parser
+=========
+1. ls
+2. mkdir
+3. pwd
+4. cd
+5. touch
