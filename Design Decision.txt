@@ -14,7 +14,10 @@ DESIGN DECISIONS:
 ---------------
 
 1. Latest Time Stamp would be considered.
-2. Following Dropbox Model for replication
+2. Following Dropbox Model for replication.
+3. Every message will be broadcasted along with the relevant receivers addresses.
+   The relevant receivers will handle the message the rest will just ignore it.
+4. No two files will have the same name and path.
 
 
 =========
@@ -26,6 +29,8 @@ REQ_FILE_TABLE : (Source Node ID, Dest Node ID) : Happens on connection. Receive
 FORCE_UPDATE : (Source Node ID, Dest Node ID) : Force the given node to do a "REQ_FILE_TABLE"
 SEND_FILE_TABLE : (SourceNode ID, Dest Node ID) : Sends the File Table to the given Node.
 UPLOAD_FILE : (FILE, Source Node ID, Dest Node ID) : Sends File to the given node.
+UPDATE_LOCAL_FILE_TABLE: Update the local files in the local file table.
+UPDATE_LOCAL_FILE: Update a single local file in the local file table.
 
 
 
@@ -60,6 +65,9 @@ Monitoring current structure
 ---------------
 
 Variables:
+
+
+
 
 
 =========

@@ -1,5 +1,6 @@
 import debug from './debug';
 import {DEV} from './header';
+import {FILE_TABLE} from './'
 
 export class EventHandler {
 
@@ -15,7 +16,7 @@ export class EventHandler {
 
           var delivery = dl.listen(socket);
           delivery.on('receive.success',function(file){
-            
+
             fs.writeFile(PATH+file.name, file.buffer, function(err){
               if(err){
                 console.log('File could not be saved: ' + err);
@@ -23,7 +24,7 @@ export class EventHandler {
                 console.log('File ' + file.name + " saved");
               };
             });
-          }); 
+          });
 
          break;
 
@@ -38,9 +39,15 @@ export class EventHandler {
 
          case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);
 
+         case 'UPDATE_LOCAL_FILE_TABLE': debug.log(event + ' broadcasted', DEV);
+         break;
+
+         case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
+         break;
+
          delivery = dl.listen( socket );
           delivery.connect();
-          
+
           delivery.on('delivery.connect',function(delivery){
             delivery.send({
               name: params.f_name,
@@ -51,7 +58,7 @@ export class EventHandler {
               console.log('File sent successfully!');
             });
 
-          });  
+          });
 
          break;
 
@@ -78,8 +85,24 @@ export class EventHandler {
          case 'UPLOAD_FILE': debug.log(event + ' broadcasted', DEV);
          break;
 
+         case 'UPDATE_LOCAL_FILE_TABLE': debug.log(event + ' broadcasted', DEV);
+         break;
+
+         case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
+         break;
+
          default:  debug.log(event + ' broadcasted', DEV);
       }
+  }
+
+  updateLocalFile(obj){
+    var local_file = {
+      F_ID : obj.F_ID,
+      F_NAME : obj.FNAME,
+      FS_DWNLD_TIME : obj.FS_DWNLD_TIME,
+    }
+
+    FILE_TABLE.LOCAL.push(local_file);
   }
 
 }
