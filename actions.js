@@ -62,6 +62,7 @@ static initializeFileTable(){
 			'F_NAME': file,
 			'TIME_STAMP': new Date().toString(),
 			'NODE_LIST': [my_ip],
+      'DIRECTORY':  fs.statSync(PATH+file).isDirectory(),
         };
         console.log(config.my_addr);
         FILE_TABLE.GLOBAL.push(f);
