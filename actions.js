@@ -9,7 +9,7 @@ var PATH = ROOT;
 export class Actions {
 
   static listFiles() {
-    console.log("List all the files: ");
+    debug.log("List all the files: ",DEV);
     fs.readdir(PATH, (err, files) => {
       files.forEach(file => {
         console.log(file);
@@ -64,7 +64,7 @@ static initializeFileTable(){
 			'NODE_LIST': [my_ip],
       'DIRECTORY':  fs.statSync(PATH+file).isDirectory(),
         };
-        console.log(config.my_addr);
+        debug.log(config.my_addr, DEV);
         FILE_TABLE.GLOBAL.push(f);
 
       });
@@ -74,28 +74,29 @@ static initializeFileTable(){
 }
 
 static showFileTable(){
-	console.log(FILE_TABLE.GLOBAL)
+	debug.log(FILE_TABLE.GLOBAL, DEV)
 }
 
 static reflectChanges(){
   for ( var i = 0;i<FILE_TABLE.GLOBAL.length;i++)
   {
-    console.log(i);
     var file = FILE_TABLE.GLOBAL[i];
     for (var j =0; j<FILE_TABLE.GLOBAL.length; j++)
     {
-      var present = false;
-      if(file.NODE_LIST[j] == config.my_addr){
-        present = true;
-        break;
-      }
-      if(!present){
-        if (!fs.existsSync(PATH+file.F_ID)){
-        fs.mkdirSync(PATH+file.F_ID);
-      }
+      if(file.DIRECTORY){
+        var present = false;
+        if(file.NODE_LIST[j] == config.my_addr){
+          present = true;
+          break;
+        }
+        if(!present){
+          debug.log("Creating File: "+ F_ID, DEV)
+          if (!fs.existsSync(PATH+file.F_ID)){
+          fs.mkdirSync(PATH+file.F_ID);
+        }
 
+        }
       }
-
     }
   }
 }
