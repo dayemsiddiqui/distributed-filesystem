@@ -39,7 +39,7 @@ export class Actions {
 
   static createDirectory(dirName){
     try {
-      fs.mkdirSync(PATH+dirName);
+      fs.mkdirSync(PATH+'/'+dirName);
     } catch(e) {
       if (e.code != 'EEXIST') throw e;
     }
