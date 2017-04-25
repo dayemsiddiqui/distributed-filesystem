@@ -77,4 +77,27 @@ static showFileTable(){
 	console.log(FILE_TABLE.GLOBAL)
 }
 
+static reflectChanges(){
+  for ( var i = 0;i<FILE_TABLE.GLOBAL.length;i++)
+  {
+    console.log(i);
+    var file = FILE_TABLE.GLOBAL[i];
+    for (var j =0; j<FILE_TABLE.GLOBAL.length; j++)
+    {
+      var present = false;
+      if(file.NODE_LIST[j] == config.my_addr){
+        present = true;
+        break;
+      }
+      if(!present){
+        if (!fs.existsSync(PATH+file.F_ID)){
+        fs.mkdirSync(PATH+file.F_ID);
+      }
+
+      }
+
+    }
+  }
+}
+
 }
