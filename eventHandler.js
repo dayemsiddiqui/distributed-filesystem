@@ -2,6 +2,7 @@ import debug from './debug';
 import {DEV} from './header';
 import {FILE_TABLE} from './fileTable';
 import {broadcast} from './connection';
+import {diffFileTable} from './utility';
 
 var dl = require('delivery');
 
@@ -51,8 +52,9 @@ export class EventHandler {
          break;
 
          case 'UPDATE_FILE_TBL':
-        //  FILE_TABLE.GLOBAL = data.fileTable;
+        //Received Global File Table
          console.log("GLOBAL FILE TABLE", data);
+         diffFileTable(data.fileTable);
          debug.log(data.event + ' handled', DEV);
          break;
 
