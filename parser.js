@@ -5,6 +5,7 @@ import {DEV} from './header';
 import {getIO} from './connection';
 import {Actions} from './actions';
 import {EventHandler} from './eventHandler';
+import {singleTransfer} from './connection';
 
 export const getAnotherCommand = () => {
 
@@ -44,8 +45,9 @@ export const getAnotherCommand = () => {
               Actions.showFileTable();
             }
             if(command == 'upload'){
-              //EventHandler.handleEvent('UPLOAD_FILE',{'f_name':'hello.txt'});
-              //getIO().emit('event', {'event':'UPLOAD_FILE', 'f_name':'hello.txt'});
+              // EventHandler.handleEvent('UPLOAD_FILE',{'f_name':'hello.txt'});
+              singleTransfer('./root/hello/', 'hello', '172.15.45.124');
+              // getIO().emit('event', {'event':'UPLOAD_FILE', 'f_name':'hello.txt'});
             }
             if(command == 'message'){
               EventHandler.broadcastEvent('USR_MSG',{'message':statement[1]});

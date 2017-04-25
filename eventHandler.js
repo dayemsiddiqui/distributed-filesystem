@@ -59,24 +59,6 @@ export class EventHandler {
          break;
 
          case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);
-
-         var s_addr = 'http://192.168.1.12:3000/';
-         socket = io_client(s_addr);
-         delivery = dl.listen( socket );
-          delivery.connect();
-
-          delivery.on('delivery.connect',function(delivery){
-            delivery.send({
-              name: params.f_name,
-              path : PATH,
-            });
-
-            delivery.on('send.success',function(file){
-              console.log('File sent successfully!');
-            });
-
-          });
-
          break;
 
          default:  debug.log(event + ' handled', DEV);

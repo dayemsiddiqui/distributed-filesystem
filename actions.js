@@ -68,11 +68,11 @@ static initializeFileTable(){
       	var my_ip = config.my_addr;
         var f =
         {
-        	'F_ID': file,
-			'F_NAME': file,
-			'TIME_STAMP': new Date().toString(),
-			'NODE_LIST': [my_ip],
-      'DIRECTORY':  fs.statSync(PATH+file).isDirectory(),
+        	'F_ID': PATH + file,
+    			'F_NAME': file,
+    			'TIME_STAMP': new Date().toString(),
+    			'NODE_LIST': [my_ip],
+          'DIRECTORY':  fs.statSync(PATH+file).isDirectory(),
         };
         debug.log(config.my_addr, DEV);
         FILE_TABLE.GLOBAL.push(f);
@@ -100,9 +100,9 @@ static reflectChanges(){
           break;
         }
         if(!present){
-          debug.log("Creating File: "+ F_ID, DEV)
-          if (!fs.existsSync(PATH+file.F_ID)){
-          fs.mkdirSync(PATH+file.F_ID);
+          debug.log("Creating File: "+ file.F_ID, DEV)
+          if (!fs.existsSync(file.F_ID)){
+          fs.mkdirSync(file.F_ID);
         }
 
         }

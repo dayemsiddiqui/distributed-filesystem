@@ -1,7 +1,8 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var io2 = require('socket.io').listen(4000)
+var io_file_client = require('socket.io-client');
+var io_file_server = require('socket.io').listen(4000);
 var io_client = require('socket.io-client');
 import {config} from './config';
 import {EventHandler} from './eventHandler';
@@ -27,11 +28,11 @@ export function initServer(){
 
 
   //FILE RECEIVING
-  io2.sockets.on('connection', function(socket){
-    
+  io_file_server.sockets.on('connection', function(socket){
+
     var delivery = dl.listen(socket);
     delivery.on('receive.success',function(file){
-          
+
       fs.writeFile(file.name, file.buffer, function(err){
         if(err){
           console.log('File could not be saved: ' + err);
@@ -39,7 +40,7 @@ export function initServer(){
           console.log('File ' + file.name + " saved");
         };
       });
-    }); 
+    });
   });
 
   io.on('connection', function(socket){
@@ -77,7 +78,7 @@ export function broadcast(tag, msg) {
 }
 
 export function singleTransfer(F_ID, F_NAME, IP){
-  var socket = io.connect('http://' + IP + ':' + '3000');
+  var socket = io_file_client.connect('http://' + IP + ':' + '4000');
   socket.on('connect', function(){
       //FILE TRANSFER
 
@@ -86,9 +87,9 @@ export function singleTransfer(F_ID, F_NAME, IP){
       delivery.on('delivery.connect',function(delivery){
         delivery.send({
           name: F_NAME,
-          path : F_ID,
+          path: F_ID.split("/").slice(0,-2).join("/") + "/",
         });
-     
+
         delivery.on('send.success',function(file){
           debug.log('File sent successfully!');
         });
