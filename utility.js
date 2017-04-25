@@ -1,6 +1,7 @@
 import { FILE_TABLE }  from './fileTable';
 import { config } from './config';
 import { EventHandler } from './eventHandler';
+import {Actions} from './actions';
 
 export var diffFileTable = (receivedFileTable) => {
   var isUpdated = false;
@@ -34,5 +35,6 @@ export var diffFileTable = (receivedFileTable) => {
   //If GLOBAL File Table is updated then broadcastEvent
   if(isUpdated){
     EventHandler.broadcastEvent('BRDCST_FILE_TBL', {});
+    Actions.reflectChanges();
   }
 }
