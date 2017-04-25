@@ -1,6 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var io2 = require('socket.io').listen(4000)
 var io_client = require('socket.io-client');
 import {config} from './config';
 import {EventHandler} from './eventHandler';
@@ -18,8 +19,27 @@ export function initServer(){
     serv_sock.push(io_client(s_addr));
   }
 
+
+
   http.listen(3000, function(){
-    debug.log('Sever started on port 3000', DEV);
+    debug.log('Server started on port 3000', DEV);
+  });
+
+
+  //FILE RECEIVING
+  io2.sockets.on('connection', function(socket){
+    
+    var delivery = dl.listen(socket);
+    delivery.on('receive.success',function(file){
+          
+      fs.writeFile(file.name, file.buffer, function(err){
+        if(err){
+          console.log('File could not be saved: ' + err);
+        }else{
+          console.log('File ' + file.name + " saved");
+        };
+      });
+    }); 
   });
 
   io.on('connection', function(socket){
@@ -32,6 +52,7 @@ export function initServer(){
     socket.on('disconnect', function () {
       debug.log('A user disconnected', DEV);
     });
+
 
     socket.on('message', function (data, from) {
      console.log('I received a message', ' saying ', data);
@@ -53,4 +74,25 @@ export function getIO(){
 export function broadcast(tag, msg) {
   io.emit(tag, msg);
   serv_sock.map((val) => {val.emit(tag, msg);})
+}
+
+export function singleTransfer(F_ID, F_NAME, IP){
+  var socket = io.connect('http://' + IP + ':' + '3000');
+  socket.on('connect', function(){
+      //FILE TRANSFER
+
+      delivery = dl.listen( socket );
+      delivery.connect();
+      delivery.on('delivery.connect',function(delivery){
+        delivery.send({
+          name: F_NAME,
+          path : F_ID,
+        });
+     
+        delivery.on('send.success',function(file){
+          debug.log('File sent successfully!');
+        });
+      });
+  });
+  socket.disconnect();
 }
