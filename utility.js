@@ -2,10 +2,12 @@ import { FILE_TABLE }  from './fileTable';
 import { config } from './config';
 import { EventHandler } from './eventHandler';
 import {Actions} from './actions';
+import {DEV, ROOT} from './header';
+import debug from './debug';
 
 export var diffFileTable = (receivedFileTable) => {
   var isUpdated = false;
-  console.log("In Diff Algo: ");
+  debug.log("In Diff Algo: ", DEV);
 
   //File Does not exist
   receivedFileTable.map((obj)=>{
@@ -13,8 +15,7 @@ export var diffFileTable = (receivedFileTable) => {
     var isPresent = false;
     FILE_TABLE.GLOBAL.forEach(function(myObj) {
       if(myObj.F_ID == obj.F_ID){
-        console.log("Is Present");
-        console.log(obj, "is present");
+        debug.log(obj, "is present", DEV);
         isPresent = true;
       }
     });

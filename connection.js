@@ -34,7 +34,7 @@ export function initServer(){
     });
 
     socket.on('message', function (data, from) {
-     console.log('I received a message by ', ' saying ', data);
+     console.log('I received a message', ' saying ', data);
   });
 
       socket.on('event', function (data) {
