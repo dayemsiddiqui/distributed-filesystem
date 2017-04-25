@@ -4,7 +4,8 @@ import { EventHandler } from './eventHandler';
 
 export var diffFileTable = (receivedFileTable) => {
   var isUpdated = false;
-  console.log("Diff Algo: ", receivedFileTable);
+  console.log("In Diff Algo: ");
+
   //File Does not exist
   receivedFileTable.map((obj)=>{
     // obj.F_ID
@@ -24,9 +25,6 @@ export var diffFileTable = (receivedFileTable) => {
       FILE_TABLE.GLOBAL.push(obj);
       isUpdated = true;
     }
-
-
-
   });
 
   //File Exists local but the given node doesnt exists
