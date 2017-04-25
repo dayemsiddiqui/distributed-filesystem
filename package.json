@@ -14,8 +14,10 @@
   "author": "Dayem Siddiqui",
   "license": "MIT",
   "dependencies": {
+    "ascii-table": "0.0.9",
     "delivery": "0.0.6",
     "express": "^4.15.2",
+    "figlet": "^1.2.0",
     "prompt": "^1.0.0",
     "readline-sync": "^1.4.7",
     "socket.io": "^1.7.3"

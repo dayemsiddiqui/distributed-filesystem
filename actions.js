@@ -4,17 +4,27 @@ import debug from './debug';
 import {config} from './config';
 import {FILE_TABLE} from './fileTable'
 import {EventHandler} from './eventHandler';
+var AsciiTable = require('ascii-table');
 
-var PATH = ROOT; 
+var PATH = ROOT;
 export class Actions {
 
   static listFiles() {
     debug.log("List all the files: ",DEV);
+
     fs.readdir(PATH, (err, files) => {
+      var table = new AsciiTable('Directory Listing')
+      table
+      .setHeading('', 'Files And Folders');
+      var i = 1;
       files.forEach(file => {
-        console.log(file);
+        table.addRow(i, file);
+        i++;
       });
+      process.stdout.write('\n');
+      process.stdout.write(table.toString()+'\n');
     });
+
   }
 
   static createFile(fileName){
