@@ -4,6 +4,7 @@ import debug from './debug';
 import {config} from './config';
 import {FILE_TABLE} from './fileTable'
 import {EventHandler} from './eventHandler';
+var FullPath = require('fullpath');
 var AsciiTable = require('ascii-table');
 
 var PATH = ROOT;
@@ -61,24 +62,65 @@ export class Actions {
 
     }
   }
-
 static initializeFileTable(){
-	fs.readdir(PATH, (err, files) => {
-      files.forEach(file => {
-      	var my_ip = config.my_addr;
-        var f =
+	const fullPaths = new FullPath.Search({
+	    'path': '/root',
+	    'dirname': __dirname,
+	    'type': 'both', //optional. If you don't specified this value, by default is set with 'files'
+	    'allFiles': true //optional. If you don't specified this value, by default is set with false and the result was full path of files with .js and .json extension.
+	});
+	for(var i = 0; i<fullPaths.pathFolders.length ; i++){
+		var trunc = fullPaths.pathFolders[i].indexOf('root/');
+		var path = fullPaths.pathFolders[i].substr(trunc);
+		var trunc = fullPaths.pathFolders[i].lastIndexOf('/');
+		var dir = fullPaths.pathFolders[i].substr(trunc+1);
+		console.log(file);
+		var f =
         {
-        	'F_ID': PATH + file,
-    			'F_NAME': file,
-    			'TIME_STAMP': new Date().toString(),
-    			'NODE_LIST': [my_ip],
-          'DIRECTORY':  fs.statSync(PATH+file).isDirectory(),
+	        'F_ID': path,
+	    	'F_NAME': dir,
+	    	'TIME_STAMP': new Date().toString(),
+	    	'NODE_LIST': [config.my_addr],
+	        'DIRECTORY':  true,
         };
-        debug.log(config.my_addr, DEV);
+        debug.log(path, DEV);
         FILE_TABLE.GLOBAL.push(f);
+	}
+	for(var i = 0; i<fullPaths.pathFiles.length ; i++){
+		var trunc = fullPaths.pathFiles[i].indexOf('root/');
+		var path = fullPaths.pathFiles[i].substr(trunc);
+		var trunc = fullPaths.pathFiles[i].lastIndexOf('/');
+		var file = fullPaths.pathFiles[i].substr(trunc+1);
+		console.log(file);
+		var f =
+        {
+	        'F_ID': path,
+	    	'F_NAME': file,
+	    	'TIME_STAMP': new Date().toString(),
+	    	'NODE_LIST': [config.my_addr],
+	        'DIRECTORY':  false,
+        };
+        debug.log(path, DEV);
+        FILE_TABLE.GLOBAL.push(f);
+	}
 
-      });
-    });
+	// fs.readdir(PATH, (err, files) => {
+	// //OLD	
+ //      files.forEach(file => {
+ //      	var my_ip = config.my_addr;
+ //        var f =
+ //        {
+ //        	'F_ID': PATH + file,
+ //    			'F_NAME': file,
+ //    			'TIME_STAMP': new Date().toString(),
+ //    			'NODE_LIST': [my_ip],
+ //          'DIRECTORY':  fs.statSync(PATH+file).isDirectory(),
+ //        };
+ //        debug.log(config.my_addr, DEV);
+ //        FILE_TABLE.GLOBAL.push(f);
+
+ //      });
+ //    });
 
     EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
 }
