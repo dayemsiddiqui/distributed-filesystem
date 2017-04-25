@@ -4,6 +4,7 @@ var io = require('socket.io')(http);
 var io_file_client = require('socket.io-client');
 var io_file_server = require('socket.io').listen(4000);
 var io_client = require('socket.io-client');
+var dl  = require('delivery');
 import {config} from './config';
 import {EventHandler} from './eventHandler';
 import {DEV} from './header';

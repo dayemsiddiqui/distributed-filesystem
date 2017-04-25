@@ -4,8 +4,6 @@ import {FILE_TABLE} from './fileTable';
 import {broadcast} from './connection';
 import {diffFileTable} from './utility';
 
-var dl = require('delivery');
-
 
 export class EventHandler {
 
