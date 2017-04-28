@@ -107,8 +107,13 @@ export function sendFile(IP, path){
   });
 }
 
-export function getIO(){
-  return io;
+export function listConnections(){
+  var allConnectedClients = Object.keys(io.sockets.connected);
+  var clientsCount = io.engine.clientsCount ; 
+  console.log("Number of Clients: "+ clientsCount);
+  console.log("All connected:"+allConnectedClients);
+  //console.log("IPs : "+io.sockets.connectionSocket.getRemoteSocketAddress());
+
 }
 
 
@@ -116,3 +121,4 @@ export function broadcast(tag, msg) {
   io.emit(tag, msg);
   serv_sock.map((val) => {val.emit(tag, msg);})
 }
+
