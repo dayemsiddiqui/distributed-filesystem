@@ -137,12 +137,13 @@ static deleteFile(fileName){
   for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
     console.log(PATH+'/'+fileName);
     console.log(FILE_TABLE.GLOBAL[i].F_ID);
-    if(FILE_TABLE.GLOBAL[i].F_ID == (PATH+'/'+fileName)){
+    if(('./'+FILE_TABLE.GLOBAL[i].F_ID) == (PATH+'/'+fileName)){
       FILE_TABLE.GLOBAL[i].DELETED = true;
+      console.log('DELTED');
   }
+}
   debug.log(FILE_TABLE.GLOBAL, DEV);
   EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
-}
 }
 
 

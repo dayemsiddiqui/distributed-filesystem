@@ -51,7 +51,8 @@ export class EventHandler {
 
          case 'UPDATE_FILE_TBL':
         //Received Global File Table
-         console.log("GLOBAL FILE TABLE", data);
+        // console.log("GLOBAL FILE TABLE", data);
+        console.log("Received File Table");
          diffFileTable(data.fileTable);
          debug.log(data.event + ' handled', DEV);
          break;
