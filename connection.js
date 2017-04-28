@@ -63,6 +63,13 @@ export function initServer(){
       socket.emit('message', "I am alive (Sent By: single socket server)");
     });
 
+    socket.on('event', function(data){
+      console.log("Single Socket Message Received: ", data);
+      EventHandler.handleEvent(data);
+      console.log("Now as a server I am gonna respond as: I am alive");
+      socket.emit('message', "Event Successfully Received (Sent By: single socket server)");
+    });
+
     ss(socket).on('file', function(stream, data) {
       // var filename = path.basename(data.name);
       stream.pipe(fs.createWriteStream(data.name));
@@ -106,6 +113,19 @@ export function sendMessage(IP, message){
     console.log("Port 4000 message: ", data);
   });
   socket.emit("message", message);
+}
+
+export function sendEvent(IP, message){
+  var socket = io_file_client.connect('http://' + IP + ':' + '4000/');
+  console.log("Trying to connect to a single server....");
+  socket.on('connect', function(){
+      //FILE TRANSFER
+      console.log("Connected to a single node");
+  });
+  socket.on('event', function(data){
+    console.log("Port 4000 event: ", data);
+  });
+  socket.emit("event", message);
 }
 
 export function sendFile(IP, path){
