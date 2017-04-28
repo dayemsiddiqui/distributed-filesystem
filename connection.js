@@ -29,19 +29,8 @@ export function initServer(){
 
 
   //FILE RECEIVING
-  io_file_server.sockets.on('connection', function(socket){
-
-    var delivery = dl.listen(socket);
-    delivery.on('receive.success',function(file){
-
-      fs.writeFile(file.name, file.buffer, function(err){
-        if(err){
-          console.log('File could not be saved: ' + err);
-        }else{
-          console.log('File ' + file.name + " saved");
-        };
-      });
-    });
+  io_file_server.on('connection', function(socket){
+    socket.emit('message', "Here is your file");
   });
 
   io.on('connection', function(socket){
@@ -65,7 +54,16 @@ export function initServer(){
   });
 
   });
-
+  var socket = io_file_client.connect('http://' + '172.15.45.124' + ':' + '4000/');
+  console.log("Trying to connect to a single server....");
+  socket.on('connect', function(){
+      //FILE TRANSFER
+      console.log("Connected to a single node");
+  });
+  socket.on('message', function(data){
+    console.log("Port 4000 message: ", data);
+  });
+  socket.emit("message", "Please send me the files")
 }
 
 export function getIO(){
@@ -76,25 +74,4 @@ export function getIO(){
 export function broadcast(tag, msg) {
   io.emit(tag, msg);
   serv_sock.map((val) => {val.emit(tag, msg);})
-}
-
-export function singleTransfer(F_ID, F_NAME, IP){
-  var socket = io_file_client.connect('http://' + IP + ':' + '4000');
-  socket.on('connect', function(){
-      //FILE TRANSFER
-
-      delivery = dl.listen( socket );
-      delivery.connect();
-      delivery.on('delivery.connect',function(delivery){
-        delivery.send({
-          name: F_NAME,
-          path: F_ID.split("/").slice(0,-2).join("/") + "/",
-        });
-
-        delivery.on('send.success',function(file){
-          debug.log('File sent successfully!');
-        });
-      });
-  });
-  socket.disconnect();
 }
