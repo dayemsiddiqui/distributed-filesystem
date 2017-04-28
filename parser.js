@@ -6,6 +6,7 @@ import {getIO} from './connection';
 import {Actions} from './actions';
 import {EventHandler} from './eventHandler';
 import {singleTransfer} from './connection';
+import {sendMessage} from './connection';
 
 export const getAnotherCommand = () => {
 
@@ -51,6 +52,9 @@ export const getAnotherCommand = () => {
             }
             if(command == 'message'){
               EventHandler.broadcastEvent('USR_MSG',{'message':statement[1]});
+            }
+            if(command == 'single_message'){
+              sendMessage(statement[1], statement[2]);
             }
           }
           //invalidCommand();
