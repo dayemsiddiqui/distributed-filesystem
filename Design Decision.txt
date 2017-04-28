@@ -84,3 +84,15 @@ Parser
 3. pwd
 4. cd
 5. touch
+
+=========
+General Rules
+=========
+
+1. Add IP to NODELIST if ROW exist, but IP does not exist in Nodelist
+2. Don't add row to F_TABLE, if my_addr is present in DELETED BY.
+3. Add DELETED BY:
+	1. IF ROW EXIST, and DELETED is false
+	2. IF ROW DOES NOT EXIST.
+
+4.Add actualDelete after FileTable is completely updated in one Diffie round.
