@@ -7,7 +7,7 @@ import {Actions} from './actions';
 import {EventHandler} from './eventHandler';
 import {singleTransfer} from './connection';
 import {sendMessage, sendFile, requestFile} from './connection';
-
+import {syncFiles} from './utility';
 export const getAnotherCommand = () => {
 
   prompt.get( config.prompt, function(err, result) {
@@ -51,7 +51,7 @@ export const getAnotherCommand = () => {
         else{
           if(DEV){
             statement = statement.split(" ");
-            console.log(statement);
+            // console.log(statement);
             if(command == 'FILE_TABLE'){
               Actions.showFileTable();
             }
@@ -75,6 +75,9 @@ export const getAnotherCommand = () => {
             }
             if(command == 'request_file'){
               requestFile(statement[0], statement[1]);
+            }
+            if(command == 'sync_files'){
+              syncFiles();
             }
 
 

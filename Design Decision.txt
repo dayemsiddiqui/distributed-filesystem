@@ -34,7 +34,7 @@ UPDATE_LOCAL_FILE: Update a single local file in the local file table.
 USR_MSG: Each node can broadcast a custom message.
 BRDCST_FILE_TBL: Broadcasts its global file table to the rest of the nodes.
 UPDATE_FILE_TBL: Compares the received file table with the own GOBAL file table and updates the changes.
-
+SYNC_FS: Compares the Gobal File Table with Local Filesystem and fetches the files that are not available locally.
 
 
 =========
