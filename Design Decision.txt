@@ -19,6 +19,8 @@ DESIGN DECISIONS:
    The relevant receivers will handle the message the rest will just ignore it.
 4. No two files will have the same name and path.
 5. Each node will broadcast its file table if the file table is updated.
+6. Any file or Directory that is marked deleted will not be added to the global file table.
+7. Any file or directory that is deleted will not be fetched.
 
 =========
 PROTOCOLS:

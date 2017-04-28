@@ -64,7 +64,7 @@ export var syncFiles = () => {
       }
     });
 
-    if(!isPresent){
+    if(!isPresent && !obj.DELETED){
       var ip = '';
       if(obj.NODE_LIST[0] != config.my_addr){
            ip = obj.NODE_LIST[0];

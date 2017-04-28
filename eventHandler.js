@@ -4,6 +4,7 @@ import {FILE_TABLE} from './fileTable';
 import {broadcast} from './connection';
 import {diffFileTable} from './utility';
 import { config } from './config';
+import { Actions } from './actions';
 
 
 export class EventHandler {

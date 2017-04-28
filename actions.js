@@ -142,6 +142,7 @@ static initializeFileTable(){
  //    });
 
     EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
+    EventHandler.broadcastEvent('REQ_FILE_TABLE',{});
 }
 
 static showFileTable(){
@@ -186,9 +187,9 @@ static actualDelete(){
       a1 = sort(config.server_addr);
       a2 = sort(FILE_TABLE.GLOBAL[i].DELETED_BY)
       if (JSON.stringify(a1) === JSON.stringify(a2)){
-        
+
       }
-      
+
     }
   }
 }
