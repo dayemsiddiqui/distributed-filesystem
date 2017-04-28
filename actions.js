@@ -29,7 +29,7 @@ export class Actions {
   }
 
   static createFile(fileName){
-    fs.writeFile(PATH+fileName, "", function(err) {
+    fs.writeFile(PATH+'/'+fileName, "", function(err) {
     if(err) {
         return console.log(err);
     }else{
@@ -41,7 +41,18 @@ export class Actions {
 
   static createDirectory(dirName){
     try {
-      fs.mkdirSync(PATH+dirName);
+      fs.mkdirSync(PATH+'/'+dirName);
+      var f =
+      {
+          'F_ID': PATH+'/'+dirName,
+          'F_NAME': dirName,
+          'TIME_STAMP': new Date().toString(),
+          'NODE_LIST': [config.my_addr],
+          'DIRECTORY':  true,
+          'DELETED' : false,
+          'DELETED_BY' : [],
+      };
+      FILE_TABLE.GLOBAL.push(f);
       EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
     } catch(e) {
       if (e.code != 'EEXIST') throw e;
@@ -79,10 +90,10 @@ static initializeFileTable(){
 		console.log(file);
 		var f =
         {
-	        'F_ID': path,
-	    	'F_NAME': dir,
-	    	'TIME_STAMP': new Date().toString(),
-	    	'NODE_LIST': [config.my_addr],
+  	      'F_ID': path,
+  	    	'F_NAME': dir,
+  	    	'TIME_STAMP': new Date().toString(),
+  	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  true,
           'DELETED' : false,
           'DELETED_BY' : [],
@@ -133,19 +144,39 @@ static initializeFileTable(){
 }
 
 static showFileTable(){
-	debug.log(FILE_TABLE.GLOBAL, DEV)
+   var table = new AsciiTable('GLOBAL FILE TABLE')
+      table
+      .setHeading('F_ID', 'F_NAME','IS_DIR','IS_DEL','TIME_STAMP', 'NODES');
+      FILE_TABLE.GLOBAL.forEach(file => {
+        table.addRow(file.F_ID, file.F_NAME, file.DIRECTORY, file.DELETED, file.TIME_STAMP, file.NODE_LIST);
+      });
+      process.stdout.write('\n');
+      process.stdout.write(table.toString()+'\n');
+	debug.log(table.toString()+'\n', DEV)
 }
 
 static deleteFile(fileName){
   for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
     if(('./'+FILE_TABLE.GLOBAL[i].F_ID) == (PATH+'/'+fileName)){
       FILE_TABLE.GLOBAL[i].DELETED = true;
-      FILE_TABLE.GLOBAL[i].DELETED_BY.append(config.my_addr);
+      FILE_TABLE.GLOBAL[i].DELETED_BY.push(config.my_addr);
+      if(FILE_TABLE.GLOBAL[i].DIRECTORY == true){
+        this.deleteDir(fileName);
+      }
       console.log(FILE_TABLE.GLOBAL[i].F_NAME+ " deleted");
   }
 }
   debug.log(FILE_TABLE.GLOBAL, DEV);
   EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
+}
+
+static deleteDir(dir){
+  for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
+    if(FILE_TABLE.GLOBAL[i].F_ID.includes(dir)){
+      FILE_TABLE.GLOBAL[i].DELETED = true;
+      FILE_TABLE.GLOBAL[i].DELETED_BY.push(config.my_addr);
+    }
+  }
 }
 
 
