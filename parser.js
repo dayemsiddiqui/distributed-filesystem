@@ -6,7 +6,7 @@ import {getIO} from './connection';
 import {Actions} from './actions';
 import {EventHandler} from './eventHandler';
 import {singleTransfer} from './connection';
-import {sendMessage} from './connection';
+import {sendMessage, sendFile} from './connection';
 
 export const getAnotherCommand = () => {
 
@@ -57,7 +57,7 @@ export const getAnotherCommand = () => {
               sendMessage(statement[1], statement[2]);
             }
             if(command == 'send_file'){
-              sendMessage(statement[1], statement[2]);
+              sendFile(statement[1], statement[2]);
             }
           }
           //invalidCommand();

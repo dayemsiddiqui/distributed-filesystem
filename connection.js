@@ -61,6 +61,19 @@ export function initServer(){
       console.log("Now as a server I am gonna respond as: I am alive");
       socket.emit('message', "I am alive (Sent By: single socket server)");
     });
+
+    socket.on('file', function(data){
+      console.log("File Received: ", data);
+    });
+
+    socket.on('request_file', function(path){
+      console.log("Send File: ", path);
+      fs.readFile(path, function(err, buff){
+        socket.emit('file', buff);
+        console.log('File sent to node', buff);
+      });
+    });
+
   });
 
 }
@@ -86,11 +99,11 @@ export function sendFile(IP, path){
       console.log("Connected to a single node...");
   });
   socket.on('file', function(data){
-    console.log("Port 4000 file: ", data);
+    console.log("Port 4000 file received: ", data);
   });
-  fs.readFile(path, function(err, buf){
-    socket.emit('file', { buffer: buf });
-    console.log('File sent to server');
+  fs.readFile(path, function(err, buff){
+    socket.emit('file', buff);
+    console.log('File sent to server', buff);
   });
 }
 
