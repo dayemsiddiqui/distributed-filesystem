@@ -6,7 +6,7 @@ import {listConnections} from './connection';
 import {Actions} from './actions';
 import {EventHandler} from './eventHandler';
 import {singleTransfer} from './connection';
-import {sendMessage, sendFile} from './connection';
+import {sendMessage, sendFile, requestFile} from './connection';
 
 export const getAnotherCommand = () => {
 
@@ -46,7 +46,7 @@ export const getAnotherCommand = () => {
           process.exit(0);
           console.log("Exited");
         }
-        
+
         else{
           if(DEV){
             statement = statement.split(" ");
@@ -71,8 +71,11 @@ export const getAnotherCommand = () => {
             if(command == 'send_file'){
               sendFile(statement[1], statement[2]);
             }
+            if(command == 'request_file'){
+              requestFile(statement[1], statement[2]);
+            }
 
-            
+
         }
       }
 
@@ -80,7 +83,7 @@ export const getAnotherCommand = () => {
           //invalidCommand();
         }
           getAnotherCommand();
-        
+
 
   });
 }
