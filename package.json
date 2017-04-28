@@ -21,7 +21,8 @@
     "fullpath": "^1.2.2",
     "prompt": "^1.0.0",
     "readline-sync": "^1.4.7",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "socket.io-stream": "^0.9.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
