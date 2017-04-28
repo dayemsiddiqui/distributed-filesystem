@@ -64,21 +64,35 @@ export function initServer(){
     });
 
     ss(socket).on('file', function(stream, data) {
-      var filename = path.basename(data.name);
-      stream.pipe(fs.createWriteStream(filename));
+      // var filename = path.basename(data.name);
+      stream.pipe(fs.createWriteStream(data.name));
       console.log("File Written");
     });
 
     socket.on('request_file', function(path){
-      console.log("Send File: ", path);
-      fs.readFile(path, function(err, buff){
-        socket.emit('file', buff);
-        console.log('File sent to node', buff);
-      });
+      var stream = ss.createStream();
+      ss(socket).emit('request_file', stream, {name: path});
+      fs.createReadStream(path).pipe(stream);
+      console.log("Requested file sent to the node");
     });
 
   });
 
+}
+
+export function requestFile(IP, path){
+  var socket = io_file_client.connect('http://' + IP + ':' + '4000/');
+  console.log("Trying to connect to a single server....");
+  socket.on('connect', function(){
+      //FILE TRANSFER
+      console.log("Connected to a single node");
+  });
+  ss(socket).on('request_file', function(stream, data){
+    stream.pipe(fs.createWriteStream(data.name));
+    console.log("File Written");
+
+  });
+  socket.emit("request_file", path);
 }
 
 export function sendMessage(IP, message){
