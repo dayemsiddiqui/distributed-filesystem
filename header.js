@@ -1,2 +1,2 @@
 export const DEV = true;
-export const ROOT = './root/';
+export const ROOT = './root';

@@ -17,7 +17,7 @@ export const getAnotherCommand = () => {
         var statement = result.question.split(" ");
         var command = statement[0];
         var trunc = result.question.indexOf(' ');
-        statement = result.question.substr(trunc);
+        statement = result.question.substr(trunc+1);
         if(command == 'ls'){
           debug.log("Another Command: ls", DEV)
           Actions.listFiles();

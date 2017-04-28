@@ -36,11 +36,13 @@ export class Actions {
         debug.log("The file was saved!", DEV);
     }
   });
+    EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
   }
 
   static createDirectory(dirName){
     try {
-      fs.mkdirSync(PATH+'/'+dirName);
+      fs.mkdirSync(PATH+dirName);
+      EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
     } catch(e) {
       if (e.code != 'EEXIST') throw e;
     }
@@ -82,6 +84,7 @@ static initializeFileTable(){
 	    	'TIME_STAMP': new Date().toString(),
 	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  true,
+          'DELETED' : false,
         };
         debug.log(path, DEV);
         FILE_TABLE.GLOBAL.push(f);
@@ -99,6 +102,7 @@ static initializeFileTable(){
 	    	'TIME_STAMP': new Date().toString(),
 	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  false,
+          'DELETED' : false,
         };
         debug.log(path, DEV);
         FILE_TABLE.GLOBAL.push(f);
@@ -128,6 +132,19 @@ static initializeFileTable(){
 static showFileTable(){
 	debug.log(FILE_TABLE.GLOBAL, DEV)
 }
+
+static deleteFile(fileName){
+  for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
+    console.log(PATH+'/'+fileName);
+    console.log(FILE_TABLE.GLOBAL[i].F_ID);
+    if(FILE_TABLE.GLOBAL[i].F_ID == (PATH+'/'+fileName)){
+      FILE_TABLE.GLOBAL[i].DELETED = true;
+  }
+  debug.log(FILE_TABLE.GLOBAL, DEV);
+  EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
+}
+}
+
 
 static reflectChanges(){
   for ( var i = 0;i<FILE_TABLE.GLOBAL.length;i++)
