@@ -10,6 +10,7 @@ import {EventHandler} from './eventHandler';
 import {DEV} from './header';
 import debug from './debug';
 var fs = require('fs');
+var ss = require('socket.io-stream');
 
 var serv_sock = []; // Used in broadcast function
 var connections = [];
@@ -62,8 +63,10 @@ export function initServer(){
       socket.emit('message', "I am alive (Sent By: single socket server)");
     });
 
-    socket.on('file', function(data){
-      console.log("File Received: ", data);
+    ss(socket).on('file', function(stream, data) {
+      var filename = path.basename(data.name);
+      stream.pipe(fs.createWriteStream(filename));
+      console.log("File Written");
     });
 
     socket.on('request_file', function(path){
@@ -101,19 +104,20 @@ export function sendFile(IP, path){
   socket.on('file', function(data){
     console.log("Port 4000 file received: ", data);
   });
-  fs.readFile(path, function(err, buff){
-    socket.emit('file', buff);
-    console.log('File sent to server', buff);
-  });
+  var stream = ss.createStream();
+  var filename = path;
+
+ss(socket).emit('file', stream, {name: filename});
+fs.createReadStream(filename).pipe(stream);
+console.log("File sent to server...");
+  // fs.readFile(path, function(err, buff){
+  //   socket.emit('file', {buffer: buff, file_path:path});
+  //   console.log('File sent to server', buff);
+  // });
 }
 
-export function listConnections(){
-  var allConnectedClients = Object.keys(io.sockets.connected);
-  var clientsCount = io.engine.clientsCount ; 
-  console.log("Number of Clients: "+ clientsCount);
-  console.log("All connected:"+allConnectedClients);
-  //console.log("IPs : "+io.sockets.connectionSocket.getRemoteSocketAddress());
-
+export function getIO(){
+  return io;
 }
 
 
@@ -121,4 +125,3 @@ export function broadcast(tag, msg) {
   io.emit(tag, msg);
   serv_sock.map((val) => {val.emit(tag, msg);})
 }
-
