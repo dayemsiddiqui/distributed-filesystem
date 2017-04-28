@@ -79,6 +79,9 @@ export const getAnotherCommand = () => {
             if(command == 'sync_files'){
               syncFiles();
             }
+            if(command == 'request_file_table'){
+              EventHandler.broadcastEvent('REQ_FILE_TABLE',{});
+            }
 
 
         }

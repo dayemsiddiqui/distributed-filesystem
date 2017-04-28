@@ -3,6 +3,7 @@ import {DEV} from './header';
 import {FILE_TABLE} from './fileTable';
 import {broadcast} from './connection';
 import {diffFileTable} from './utility';
+import { config } from './config';
 
 
 export class EventHandler {
@@ -32,27 +33,26 @@ export class EventHandler {
 
          break;
 
-         case 'REQ_FILE_TABLE': debug.log(event + ' handled', DEV);
+
+         case 'FORCE_UPDATE': debug.log(data.event + ' handled', DEV);
          break;
 
-         case 'FORCE_UPDATE': debug.log(event + ' handled', DEV);
+         case 'SEND_FILE_TABLE':
+         Actions.sendFileTable(data.ip);
+         debug.log(data.event + ' handled', DEV);
          break;
 
-         case 'SEND_FILE_TABLE': debug.log(event + ' handled', DEV);
+
+
+         case 'UPDATE_LOCAL_FILE_TABLE':
+         debug.log(data.event + ' broadcasted', DEV);
          break;
 
-
-
-         case 'UPDATE_LOCAL_FILE_TABLE': debug.log(event + ' broadcasted', DEV);
-         break;
-
-         case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
+         case 'UPDATE_LOCAL_FILE': debug.log(data.event + ' broadcasted', DEV);
          break;
 
          case 'UPDATE_FILE_TBL':
-        //Received Global File Table
-        // console.log("GLOBAL FILE TABLE", data);
-        console.log("Received File Table");
+         console.log("Received File Table");
          diffFileTable(data.fileTable);
          debug.log(data.event + ' handled', DEV);
          break;
@@ -72,6 +72,7 @@ export class EventHandler {
          break;
 
          case 'REQ_FILE_TABLE': debug.log(event + ' broadcasted', DEV);
+         broadcast('event', {event:'SEND_FILE_TABLE', ip: config.my_addr})
          break;
 
          case 'FORCE_UPDATE': debug.log(event + ' broadcasted', DEV);

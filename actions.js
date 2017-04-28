@@ -6,6 +6,7 @@ import {FILE_TABLE} from './fileTable'
 import {EventHandler} from './eventHandler';
 var FullPath = require('fullpath');
 var AsciiTable = require('ascii-table');
+import {sendEvent} from './connection';
 
 var PATH = ROOT;
 export class Actions {
@@ -123,7 +124,7 @@ static initializeFileTable(){
 	}
 
 	// fs.readdir(PATH, (err, files) => {
-	// //OLD	
+	// //OLD
  //      files.forEach(file => {
  //      	var my_ip = config.my_addr;
  //        var f =
@@ -215,6 +216,11 @@ static reflectChanges(){
       }
     }
   }
+}
+
+
+static sendFileTable(ip){
+  sendEvent(ip, {event:'UPDATE_FILE_TBL', fileTable: FILE_TABLE.GLOBAL})
 }
 
 }
