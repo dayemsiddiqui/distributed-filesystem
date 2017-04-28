@@ -47,9 +47,11 @@ export const getAnotherCommand = () => {
           console.log("Exited");
         }
 
+
         else{
           if(DEV){
             statement = statement.split(" ");
+            console.log(statement);
             if(command == 'FILE_TABLE'){
               Actions.showFileTable();
             }
@@ -66,13 +68,13 @@ export const getAnotherCommand = () => {
 
             }
             if(command == 'single_message'){
-              sendMessage(statement[1], statement[2]);
+              sendMessage(statement[0], statement[1]);
             }
             if(command == 'send_file'){
-              sendFile(statement[1], statement[2]);
+              sendFile(statement[0], statement[1]);
             }
             if(command == 'request_file'){
-              requestFile(statement[1], statement[2]);
+              requestFile(statement[0], statement[1]);
             }
 
 

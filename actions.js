@@ -85,6 +85,8 @@ static initializeFileTable(){
 	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  true,
           'DELETED' : false,
+          'DELETED_BY' : [],
+
         };
         debug.log(path, DEV);
         FILE_TABLE.GLOBAL.push(f);
@@ -103,6 +105,7 @@ static initializeFileTable(){
 	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  false,
           'DELETED' : false,
+          'DELETED_BY' : [],
         };
         debug.log(path, DEV);
         FILE_TABLE.GLOBAL.push(f);
@@ -135,11 +138,10 @@ static showFileTable(){
 
 static deleteFile(fileName){
   for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
-    console.log(PATH+'/'+fileName);
-    console.log(FILE_TABLE.GLOBAL[i].F_ID);
     if(('./'+FILE_TABLE.GLOBAL[i].F_ID) == (PATH+'/'+fileName)){
       FILE_TABLE.GLOBAL[i].DELETED = true;
-      console.log('DELTED');
+      FILE_TABLE.GLOBAL[i].DELETED_BY.append(config.my_addr);
+      console.log(FILE_TABLE.GLOBAL[i].F_NAME+ " deleted");
   }
 }
   debug.log(FILE_TABLE.GLOBAL, DEV);
