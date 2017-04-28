@@ -68,8 +68,13 @@ export function initServer(){
 
 }
 
-export function getIO(){
-  return io;
+export function listConnections(){
+  var allConnectedClients = Object.keys(io.sockets.connected);
+  var clientsCount = io.engine.clientsCount ; 
+  console.log("Number of Clients: "+ clientsCount);
+  console.log("All connected:"+allConnectedClients);
+  //console.log("IPs : "+io.sockets.connectionSocket.getRemoteSocketAddress());
+
 }
 
 
@@ -78,7 +83,7 @@ export function broadcast(tag, msg) {
   serv_sock.map((val) => {val.emit(tag, msg);})
 }
 
-export function singleTransfer(F_ID, F_NAME, IP){
+export function singleFileTransfer(F_ID, F_NAME, IP){
   var socket = io_file_client.connect('http://' + IP + ':' + '4000');
   socket.on('connect', function(){
       //FILE TRANSFER
@@ -98,3 +103,11 @@ export function singleTransfer(F_ID, F_NAME, IP){
   });
   socket.disconnect();
 }
+export function singleMessageTransfer(F_ID, F_NAME, IP){
+  var socket = io_file_client.connect('http://' + IP + ':' + '4000');
+  socket.on('connect', function(){
+
+  });
+  socket.disconnect();
+}
+

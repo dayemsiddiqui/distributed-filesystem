@@ -2,7 +2,7 @@ var prompt = require('prompt');
 import {config} from './config';
 import debug from './debug';
 import {DEV} from './header';
-import {getIO} from './connection';
+import {listConnections} from './connection';
 import {Actions} from './actions';
 import {EventHandler} from './eventHandler';
 import {singleTransfer} from './connection';
@@ -52,7 +52,16 @@ export const getAnotherCommand = () => {
             if(command == 'message'){
               EventHandler.broadcastEvent('USR_MSG',{'message':statement[1]});
             }
+            if(command == 'LS_CONN'){
+              listConnections();
+
+
+            }
+
+            
           }
+
+
           //invalidCommand();
         }
           getAnotherCommand();
