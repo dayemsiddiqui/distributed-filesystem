@@ -9,6 +9,7 @@ import {config} from './config';
 import {EventHandler} from './eventHandler';
 import {DEV} from './header';
 import debug from './debug';
+var fs = require('fs');
 
 var serv_sock = []; // Used in broadcast function
 var connections = [];
@@ -75,6 +76,22 @@ export function sendMessage(IP, message){
     console.log("Port 4000 message: ", data);
   });
   socket.emit("message", message);
+}
+
+export function sendFile(IP, path){
+  var socket = io_file_client.connect('http://' + IP + ':' + '4000/');
+  console.log("Trying to connect to a single server....");
+  socket.on('connect', function(){
+      //FILE TRANSFER
+      console.log("Connected to a single node...");
+  });
+  socket.on('file', function(data){
+    console.log("Port 4000 file: ", data);
+  });
+  fs.readFile(path, function(err, buf){
+    socket.emit('file', { buffer: buf });
+    console.log('File sent to server');
+  });
 }
 
 export function getIO(){

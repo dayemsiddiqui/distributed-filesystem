@@ -56,6 +56,9 @@ export const getAnotherCommand = () => {
             if(command == 'single_message'){
               sendMessage(statement[1], statement[2]);
             }
+            if(command == 'send_file'){
+              sendMessage(statement[1], statement[2]);
+            }
           }
           //invalidCommand();
         }
