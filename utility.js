@@ -26,6 +26,9 @@ export var diffFileTable = (receivedFileTable) => {
       //If file is not present then add
       //TODO: implement a check if your ip address already exists in the NODE_LIST
       obj.NODE_LIST.push(config.my_addr);
+      if(obj.DELETED){
+        obj.DELETED_BY.push(config.my_addr);
+      }
       FILE_TABLE.GLOBAL.push(obj);
       isUpdated = true;
     }
