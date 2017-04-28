@@ -148,9 +148,9 @@ static initializeFileTable(){
 static showFileTable(){
    var table = new AsciiTable('GLOBAL FILE TABLE')
       table
-      .setHeading('F_ID', 'F_NAME','IS_DIR','IS_DEL','TIME_STAMP', 'NODES');
+      .setHeading('F_ID', 'F_NAME','IS_DIR','IS_DEL','TIME_STAMP', 'NODES', 'DELETED_BY');
       FILE_TABLE.GLOBAL.forEach(file => {
-        table.addRow(file.F_ID, file.F_NAME, file.DIRECTORY, file.DELETED, file.TIME_STAMP, file.NODE_LIST);
+        table.addRow(file.F_ID, file.F_NAME, file.DIRECTORY, file.DELETED, file.TIME_STAMP, file.NODE_LIST, file.DELETED_BY);
       });
       process.stdout.write('\n');
       process.stdout.write(table.toString()+'\n');

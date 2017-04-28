@@ -4,7 +4,7 @@ import {Actions} from './actions';
 var figlet = require('figlet');
 
 const main = () => {
-
+  
   figlet('Gormint FS', function(err, data) {
     if (err) {
         console.log('Something went wrong...');
