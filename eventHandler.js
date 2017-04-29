@@ -93,8 +93,6 @@ export class EventHandler {
          case 'EXECUTE':
          fs.readFile('./code/map-reduce.js', 'utf8', function(err, data) {
             if (err) throw err;
-            console.log('OK: ' + './code/map-reduce.js');
-            console.log(data)
             broadcast('event', {event:'EXECUTE' ,source: config.my_addr, code: data});
           });
          debug.log(event + ' broadcasted', DEV);
