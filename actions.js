@@ -88,7 +88,7 @@ static initializeFileTable(){
 		var path = fullPaths.pathFolders[i].substr(trunc);
 		var trunc = fullPaths.pathFolders[i].lastIndexOf('/');
 		var dir = fullPaths.pathFolders[i].substr(trunc+1);
-		console.log(file);
+		console.log(path);
 		var f =
         {
   	      'F_ID': path,
@@ -108,7 +108,7 @@ static initializeFileTable(){
 		var path = fullPaths.pathFiles[i].substr(trunc);
 		var trunc = fullPaths.pathFiles[i].lastIndexOf('/');
 		var file = fullPaths.pathFiles[i].substr(trunc+1);
-		console.log(file);
+		console.log(path);
 		var f =
         {
 	        'F_ID': path,
@@ -207,14 +207,14 @@ static reflectChanges(){
           present = true;
           break;
         }
-        if(!present){
-          debug.log("Creating File: "+ file.F_ID, DEV)
-          if (!fs.existsSync(file.F_ID)){
-          fs.mkdirSync(file.F_ID);
-        }
-
-        }
       }
+    }
+    if(!present){
+      debug.log("Creating File: "+ file.F_ID, DEV)
+      if (!fs.existsSync(file.F_ID)){
+      fs.mkdirSync(file.F_ID);
+    }
+
     }
   }
 }
