@@ -95,7 +95,7 @@ static initializeFileTable(){
     var mtime = new Date(util.inspect(stats.mtime));
 		var f =
         {
-  	      'F_ID': path,
+  	      'F_ID': './'+path,
   	    	'F_NAME': dir,
   	    	'TIME_STAMP': mtime,
   	    	'NODE_LIST': [config.my_addr],
@@ -116,7 +116,7 @@ static initializeFileTable(){
     var mtime = new Date(util.inspect(stats.mtime));
 		var f =
         {
-	        'F_ID': path,
+	        'F_ID': './'+path,
 	    	'F_NAME': file,
 	    	'TIME_STAMP': mtime,
 	    	'NODE_LIST': [config.my_addr],
@@ -146,7 +146,7 @@ static showFileTable(){
 
 static deleteFile(fileName){
   for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
-    if(('./'+FILE_TABLE.GLOBAL[i].F_ID) == (PATH+'/'+fileName)){
+    if((FILE_TABLE.GLOBAL[i].F_ID) == (PATH+'/'+fileName)){
       FILE_TABLE.GLOBAL[i].DELETED = true;
       FILE_TABLE.GLOBAL[i].DELETED_BY.push(config.my_addr);
       if(FILE_TABLE.GLOBAL[i].DIRECTORY == true){
@@ -175,9 +175,10 @@ static actualDelete(){
       var nodes = config.server_addr;
       nodes.push(config.my_addr);
       if (areEqual(nodes, FILE_TABLE.GLOBAL[i].DELETED_BY)){
-        fs.unlink('./'+FILE_TABLE.GLOBAL[i].F_ID);
+        fs.unlink(FILE_TABLE.GLOBAL[i].F_ID);
         console.log("DELETED A FILE")
-      FILE_TABLE.GLOBAL.pop(i);
+      FILE_TABLE.GLOBAL.pop
+      (i);
       }
       
     }
