@@ -36,8 +36,17 @@ export var diffFileTable = (receivedFileTable) => {
 
 
         FILE_TABLE.GLOBAL.forEach(function(myObj) {
+          if(myObj.F_ID == obj.F_ID && obj.DELETED){
+            myObj.DELETED = true;
+            myObj.DELETED_BY.push(config.my_addr);
+            isUpdated = true;
+          }
           if(myObj.F_ID == obj.F_ID && !areEqual(myObj.NODE_LIST,obj.NODE_LIST)){
             myObj.NODE_LIST = arrayUnique(obj.NODE_LIST.concat(myObj.NODE_LIST));
+            isUpdated = true;
+          }
+          if(myObj.F_ID == obj.F_ID && !areEqual(myObj.DELETED_BY,obj.DELETED_BY)){
+            myObj.DELETED_BY = arrayUnique(obj.DELETED_BY.concat(myObj.DELETED_BY));
             isUpdated = true;
           }
         });
@@ -118,4 +127,8 @@ function areEqual(a, b) {
   return a.filter(function(i) {
     return !b.includes(i);
   }).length === 0;
+}
+
+function convertStringToBool(str){
+  return ((str === "True") || (str === "true")) ? true:false;
 }
