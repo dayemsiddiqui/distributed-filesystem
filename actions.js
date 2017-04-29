@@ -90,6 +90,8 @@ static initializeFileTable(){
 		var path = fullPaths.pathFolders[i].substr(trunc);
 		var trunc = fullPaths.pathFolders[i].lastIndexOf('/');
 		var dir = fullPaths.pathFolders[i].substr(trunc+1);
+    var stats = fs.statSync("./"+path);
+    var mtime = new Date(util.inspect(stats.mtime));
 		var f =
         {
   	      'F_ID': path,
@@ -109,16 +111,8 @@ static initializeFileTable(){
 		var path = fullPaths.pathFiles[i].substr(trunc);
 		var trunc = fullPaths.pathFiles[i].lastIndexOf('/');
 		var file = fullPaths.pathFiles[i].substr(trunc+1);
-    var mtime;
-    var j = 0;
-    fs.stat('./'+path, function(err, stats){
-      //console.log(stats);
-      mtime = new Date(util.inspect(stats.mtime));
-      //console.log(file,':',mtime);
-    });
-    //console.log(file,':',mtime);
-    //console.log(mtime);
-
+    var stats = fs.statSync("./"+path);
+    var mtime = new Date(util.inspect(stats.mtime));
 		var f =
         {
 	        'F_ID': path,
@@ -132,24 +126,6 @@ static initializeFileTable(){
         debug.log(path, DEV);
         FILE_TABLE.GLOBAL.push(f);
 	}
-
-	// fs.readdir(PATH, (err, files) => {
-	// //OLD
- //      files.forEach(file => {
- //      	var my_ip = config.my_addr;
- //        var f =
- //        {
- //        	'F_ID': PATH + file,
- //    			'F_NAME': file,
- //    			'TIME_STAMP': new Date().toString(),
- //    			'NODE_LIST': [my_ip],
- //          'DIRECTORY':  fs.statSync(PATH+file).isDirectory(),
- //        };
- //        debug.log(config.my_addr, DEV);
- //        FILE_TABLE.GLOBAL.push(f);
-
- //      });
- //    });
 
     EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
     EventHandler.broadcastEvent('REQ_FILE_TABLE',{});
