@@ -5,6 +5,7 @@ import {broadcast} from './connection';
 import {diffFileTable} from './utility';
 import { config } from './config';
 import { Actions } from './actions';
+import { _map } from './code/map-reduce';
 
 
 export class EventHandler {
@@ -58,7 +59,9 @@ export class EventHandler {
          debug.log(data.event + ' handled', DEV);
          break;
 
-         case 'UPLOAD_FILE': debug.log(event + ' handled', DEV);
+         case 'EXECUTE':
+         console.log("Job Completed (Result): ", _map());
+         debug.log(data.event + ' handled', DEV);
          break;
 
          default:  debug.log(event + ' handled', DEV);
@@ -79,16 +82,9 @@ export class EventHandler {
          case 'FORCE_UPDATE': debug.log(event + ' broadcasted', DEV);
          break;
 
-         case 'SEND_FILE_TABLE': debug.log(event + ' broadcasted', DEV);
-         break;
-
-         case 'UPLOAD_FILE': debug.log(event + ' broadcasted', DEV);
-         break;
-
-         case 'UPDATE_LOCAL_FILE_TABLE': debug.log(event + ' broadcasted', DEV);
-         break;
-
-         case 'UPDATE_LOCAL_FILE': debug.log(event + ' broadcasted', DEV);
+         case 'EXECUTE':
+         broadcast('event', {event:'EXECUTE' ,source: config.my_addr});
+         debug.log(event + ' broadcasted', DEV);
          break;
 
          case 'BRDCST_FILE_TBL':

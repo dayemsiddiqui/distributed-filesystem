@@ -82,6 +82,9 @@ export const getAnotherCommand = () => {
             if(command == 'request_file_table'){
               EventHandler.broadcastEvent('REQ_FILE_TABLE',{});
             }
+            if(command == 'execute'){
+              EventHandler.broadcastEvent('EXECUTE',{});
+            }
 
 
         }
