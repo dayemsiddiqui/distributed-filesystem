@@ -91,7 +91,6 @@ export class EventHandler {
          break;
 
          case 'EXECUTE':
-         code_str = '';
          fs.readFile('./code/map-reduce.js', 'utf8', function(err, data) {
             if (err) throw err;
             console.log('OK: ' + './code/map-reduce.js');
