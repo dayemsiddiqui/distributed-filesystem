@@ -64,6 +64,7 @@ export var diffFileTable = (receivedFileTable) => {
     EventHandler.broadcastEvent('BRDCST_FILE_TBL', {});
     Actions.reflectChanges();
     syncFiles();
+    Actions.actualDelete();
   }
 }
 
@@ -119,7 +120,7 @@ function arrayUnique(array) {
     return a;
 }
 
-function areEqual(a, b) {
+export function areEqual(a, b) {
   if ( a.length != b.length) {
     return false;
   }
