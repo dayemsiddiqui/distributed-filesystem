@@ -6,6 +6,7 @@ import {diffFileTable} from './utility';
 import { config } from './config';
 import { Actions } from './actions';
 import { _map } from './code/map-reduce';
+var fs = require('fs');
 
 
 export class EventHandler {
@@ -60,7 +61,14 @@ export class EventHandler {
          break;
 
          case 'EXECUTE':
-         console.log("Job Completed (Result): ", _map());
+         fs.writeFile("./code/map-reduce.js", data.code, function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+
+              console.log("Job Completed (Result): ", _map());
+          });
+
          debug.log(data.event + ' handled', DEV);
          break;
 
@@ -83,7 +91,13 @@ export class EventHandler {
          break;
 
          case 'EXECUTE':
-         broadcast('event', {event:'EXECUTE' ,source: config.my_addr});
+         code_str = '';
+         fs.readFile('./code/map-reduce.js', 'utf8', function(err, data) {
+            if (err) throw err;
+            console.log('OK: ' + './code/map-reduce.js');
+            console.log(data)
+            broadcast('event', {event:'EXECUTE' ,source: config.my_addr, code: data});
+          });
          debug.log(event + ' broadcasted', DEV);
          break;
 

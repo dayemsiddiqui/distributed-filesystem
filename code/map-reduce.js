@@ -6,7 +6,7 @@ export var _map = () => {
 
   // Whatever you return will be passed to the reducer in an array as a argument
   // return something
-  return 5;
+  return 2;
 }
 
 //Reduce Stub For Aggregation of Map
