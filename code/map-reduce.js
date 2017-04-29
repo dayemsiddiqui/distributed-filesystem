@@ -1,5 +1,5 @@
 // Map Stub For Distributed Execution
-var export var _map = () => {
+export var _map = () => {
    //_map does not take any arguments
 
   //Your code goes here
@@ -10,7 +10,7 @@ var export var _map = () => {
 }
 
 //Reduce Stub For Aggregation of Map
-var export var _reduce = (arr) => {
+export var _reduce = (arr) => {
   //Here arr is the array of objects returned by each map function
   // Your code goes here
 
