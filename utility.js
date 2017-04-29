@@ -85,7 +85,7 @@ export var syncFiles = () => {
   FILE_TABLE.GLOBAL.map((obj) => {
     var isPresent = false;
     local_files.forEach(function(myObj) {
-      if(obj.F_ID == myObj){
+      if(obj.F_ID == myObj.F_ID){
         debug.log(obj, "is present", DEV);
         isPresent = true;
       }
