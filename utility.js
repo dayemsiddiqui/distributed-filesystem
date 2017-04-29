@@ -21,8 +21,8 @@ export var diffFileTable = (receivedFileTable) => {
         isPresent = true;
       }
     });
-
-    if(!isPresent){
+    var inDeletedBy = ((obj.DELETED_BY.filter((val) => { return val == config.my_addr })).length == 0) ? false:true;
+    if(!isPresent && !inDeletedBy){
       //If file is not present then add
       //TODO: implement a check if your ip address already exists in the NODE_LIST
       obj.NODE_LIST.push(config.my_addr);
