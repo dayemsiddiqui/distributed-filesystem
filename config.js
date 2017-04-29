@@ -1,5 +1,5 @@
 export const config = {
-  server_addr: ['172.15.126.47'],
+  server_addr: ['192.168.15.53'],
   my_addr: '172.15.126.47',
   prompt: {
             description: ' ',     // Prompt displayed to the user. If not supplied name will be used.
