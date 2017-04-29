@@ -1,6 +1,7 @@
 import {getAnotherCommand} from './parser';
 import {initServer} from './connection';
 import {Actions} from './actions';
+import {startWatch} from './watcher';
 var figlet = require('figlet');
 
 const main = () => {
@@ -16,6 +17,7 @@ const main = () => {
   initServer();
   Actions.initializeFileTable();
   getAnotherCommand();
+  startWatch();
 }
 
 main();

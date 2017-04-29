@@ -21,8 +21,8 @@ export var diffFileTable = (receivedFileTable) => {
         isPresent = true;
       }
     });
-
-    if(!isPresent){
+    var inDeletedBy = ((obj.DELETED_BY.filter((val) => { return val == config.my_addr })).length == 0) ? false:true;
+    if(!isPresent && !inDeletedBy){
       //If file is not present then add
       //TODO: implement a check if your ip address already exists in the NODE_LIST
       obj.NODE_LIST.push(config.my_addr);
@@ -31,16 +31,40 @@ export var diffFileTable = (receivedFileTable) => {
       }
       FILE_TABLE.GLOBAL.push(obj);
       isUpdated = true;
+    }else{
+        //Replace the nodelist of my local file entry row with the updated entry row nodelist
+
+
+        FILE_TABLE.GLOBAL.forEach(function(myObj) {
+          if(myObj.F_ID == obj.F_ID && obj.DELETED && !myObj.DELETED){
+            myObj.DELETED = true;
+            myObj.DELETED_BY.push(config.my_addr);
+            arrayUnique(myObj.DELETED_BY);
+            isUpdated = true;
+          }
+          if(myObj.F_ID == obj.F_ID && !areEqual(myObj.NODE_LIST,obj.NODE_LIST)){
+            myObj.NODE_LIST = arrayUnique(obj.NODE_LIST.concat(myObj.NODE_LIST));
+            isUpdated = true;
+          }
+          if(myObj.F_ID == obj.F_ID && !areEqual(myObj.DELETED_BY,obj.DELETED_BY)){
+            myObj.DELETED_BY = arrayUnique(obj.DELETED_BY.concat(myObj.DELETED_BY));
+            isUpdated = true;
+          }
+        });
+
+
     }
   });
 
-  //File Exists local but the given node doesnt exists
+
+
 
   //If GLOBAL File Table is updated then broadcastEvent
   if(isUpdated){
     EventHandler.broadcastEvent('BRDCST_FILE_TBL', {});
     Actions.reflectChanges();
     syncFiles();
+    Actions.actualDelete();
   }
 }
 
@@ -61,13 +85,13 @@ export var syncFiles = () => {
   FILE_TABLE.GLOBAL.map((obj) => {
     var isPresent = false;
     local_files.forEach(function(myObj) {
-      if(obj.F_ID == myObj){
+      if(obj.F_ID == myObj.F_ID){
         debug.log(obj, "is present", DEV);
         isPresent = true;
       }
     });
 
-    if(!isPresent && !obj.DELETED){
+    if(!isPresent && !obj.DELETED && !obj.DIRECTORY){
       var ip = '';
       if(obj.NODE_LIST[0] != config.my_addr){
            ip = obj.NODE_LIST[0];
@@ -82,4 +106,29 @@ export var syncFiles = () => {
 
 
 
+}
+
+function arrayUnique(array) {
+    var a = array.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) {
+            if(a[i] === a[j])
+                a.splice(j--, 1);
+        }
+    }
+
+    return a;
+}
+
+export function areEqual(a, b) {
+  if ( a.length != b.length) {
+    return false;
+  }
+  return a.filter(function(i) {
+    return !b.includes(i);
+  }).length === 0;
+}
+
+function convertStringToBool(str){
+  return ((str === "True") || (str === "true")) ? true:false;
 }

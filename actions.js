@@ -4,9 +4,13 @@ import debug from './debug';
 import {config} from './config';
 import {FILE_TABLE} from './fileTable'
 import {EventHandler} from './eventHandler';
-var FullPath = require('fullpath');
-var AsciiTable = require('ascii-table');
 import {sendEvent} from './connection';
+import {areEqual} from './utility';
+var FullPath = require('fullpath');
+var AsciiTable = require('ascii-table')
+const util = require('util');;
+var rmdir = require('rimraf');
+
 
 var PATH = ROOT;
 export class Actions {
@@ -88,12 +92,13 @@ static initializeFileTable(){
 		var path = fullPaths.pathFolders[i].substr(trunc);
 		var trunc = fullPaths.pathFolders[i].lastIndexOf('/');
 		var dir = fullPaths.pathFolders[i].substr(trunc+1);
-		console.log(file);
+    var stats = fs.statSync("./"+path);
+    var mtime = new Date(util.inspect(stats.mtime));
 		var f =
         {
-  	      'F_ID': path,
+  	      'F_ID': './'+path,
   	    	'F_NAME': dir,
-  	    	'TIME_STAMP': new Date().toString(),
+  	    	'TIME_STAMP': mtime,
   	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  true,
           'DELETED' : false,
@@ -108,12 +113,13 @@ static initializeFileTable(){
 		var path = fullPaths.pathFiles[i].substr(trunc);
 		var trunc = fullPaths.pathFiles[i].lastIndexOf('/');
 		var file = fullPaths.pathFiles[i].substr(trunc+1);
-		console.log(file);
+    var stats = fs.statSync("./"+path);
+    var mtime = new Date(util.inspect(stats.mtime));
 		var f =
         {
-	        'F_ID': path,
+	        'F_ID': './'+path,
 	    	'F_NAME': file,
-	    	'TIME_STAMP': new Date().toString(),
+	    	'TIME_STAMP': mtime,
 	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  false,
           'DELETED' : false,
@@ -122,24 +128,6 @@ static initializeFileTable(){
         debug.log(path, DEV);
         FILE_TABLE.GLOBAL.push(f);
 	}
-
-	// fs.readdir(PATH, (err, files) => {
-	// //OLD
- //      files.forEach(file => {
- //      	var my_ip = config.my_addr;
- //        var f =
- //        {
- //        	'F_ID': PATH + file,
- //    			'F_NAME': file,
- //    			'TIME_STAMP': new Date().toString(),
- //    			'NODE_LIST': [my_ip],
- //          'DIRECTORY':  fs.statSync(PATH+file).isDirectory(),
- //        };
- //        debug.log(config.my_addr, DEV);
- //        FILE_TABLE.GLOBAL.push(f);
-
- //      });
- //    });
 
     EventHandler.broadcastEvent('BRDCST_FILE_TBL',{});
     EventHandler.broadcastEvent('REQ_FILE_TABLE',{});
@@ -159,7 +147,7 @@ static showFileTable(){
 
 static deleteFile(fileName){
   for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
-    if(('./'+FILE_TABLE.GLOBAL[i].F_ID) == (PATH+'/'+fileName)){
+    if((FILE_TABLE.GLOBAL[i].F_ID) == (PATH+'/'+fileName)){
       FILE_TABLE.GLOBAL[i].DELETED = true;
       FILE_TABLE.GLOBAL[i].DELETED_BY.push(config.my_addr);
       if(FILE_TABLE.GLOBAL[i].DIRECTORY == true){
@@ -183,39 +171,62 @@ static deleteDir(dir){
 
 static actualDelete(){
   for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
+    if(FILE_TABLE.GLOBAL[i].DIRECTORY) {continue};
     if(FILE_TABLE.GLOBAL[i].DELETED){
-      a1 = sort(config.server_addr);
-      a2 = sort(FILE_TABLE.GLOBAL[i].DELETED_BY)
-      if (JSON.stringify(a1) === JSON.stringify(a2)){
+      console.log("IN DELETED");
+      var nodes = config.server_addr;
+      nodes.push(config.my_addr);
 
+      if (areEqual(nodes, FILE_TABLE.GLOBAL[i].DELETED_BY)){
+          fs.unlink(FILE_TABLE.GLOBAL[i].F_ID);
+          console.log("DELETED A FILE")
+        }
+        
+      FILE_TABLE.GLOBAL.pop(i);
       }
+      
+    }
+    this.actualDeleteDir();
+  }
 
+static actualDeleteDir(){
+  for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
+    if(!FILE_TABLE.GLOBAL.DIRECTORY) {continue};
+    dir = FILE_TABLE.GLOBAL[i].F_ID;
+    if(FILE_TABLE.GLOBAL[i].DELETED){
+      console.log("IN DELETED");
+      var nodes = config.server_addr;
+      nodes.push(config.my_addr);
+
+      if (areEqual(nodes, FILE_TABLE.GLOBAL[i].DELETED_BY)){
+          rimraf(FILE_TABLE.GLOBAL[i].F_ID, function () { console.log('done'); });
+            for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
+              if(FILE_TABLE.GLOBAL[i].F_ID.includes(dir)){
+                FILE_TABLE.GLOBAL.pop(i);
+              }
+            }
+        }
+
+        
+      FILE_TABLE.GLOBAL.pop(i);
+      }
+      
     }
   }
-}
+
 
 
 static reflectChanges(){
+
   for ( var i = 0;i<FILE_TABLE.GLOBAL.length;i++)
   {
     var file = FILE_TABLE.GLOBAL[i];
-    for (var j =0; j<FILE_TABLE.GLOBAL.length; j++)
-    {
-      if(file.DIRECTORY){
-        var present = false;
-        if(file.NODE_LIST[j] == config.my_addr){
-          present = true;
-          break;
-        }
-        if(!present){
-          debug.log("Creating File: "+ file.F_ID, DEV)
+    var present = false;
+     if(!file.DIRECTORY){ continue; }
+          console.log("Creating File: "+ file.F_ID, DEV)
           if (!fs.existsSync(file.F_ID)){
           fs.mkdirSync(file.F_ID);
         }
-
-        }
-      }
-    }
   }
 }
 

@@ -11,13 +11,28 @@ import {DEV} from './header';
 import debug from './debug';
 var fs = require('fs');
 var ss = require('socket.io-stream');
+var os = require('os');
 
 var serv_sock = []; // Used in broadcast function
 var connections = [];
 
+export function setMyAddr(){
+  var interfaces = os.networkInterfaces();
+  var addresses = [];
+  for (var k in interfaces) {
+      for (var k2 in interfaces[k]) {
+          var address = interfaces[k][k2];
+          if (address.family === 'IPv4' && !address.internal) {
+              addresses.push(address.address);
+          }
+      }
+  }
+  config.my_addr = addresses[0];
+}
+
 export function initServer(){
 
-
+  setMyAddr();
 
   for(var i = 0; i < config.server_addr.length; i++){
     if(config.server_addr[i] == config.my_addr) continue;
@@ -58,13 +73,10 @@ export function initServer(){
   io_file_server.on('connection', function(socket){
     socket.emit('message', "I acknowledge your connection");
     socket.on('message', function(data){
-      console.log("Single Socket Message Received: ", data);
-      console.log("Now as a server I am gonna respond as: I am alive");
       socket.emit('message', "I am alive (Sent By: single socket server)");
     });
 
     socket.on('event', function(data){
-      console.log("Single Socket Message Received: ", data);
       EventHandler.handleEvent(data);
       console.log("Now as a server I am gonna respond as: I am alive");
       socket.emit('message', "Event Successfully Received (Sent By: single socket server)");

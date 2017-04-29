@@ -95,4 +95,22 @@ General Rules
 	1. IF ROW EXIST, and DELETED is false
 	2. IF ROW DOES NOT EXIST.
 
+------------------------
+      FILE_DECISION
+------------------------
+1 - TIME_STAMP for a file will be same across all GFT.
+2 - Each File would have the latest modified date.
+3 - Whenever a file is modified it will reset the nodelist.
+The process is as follows:
+Source:
+ 1 - Modify the file
+ 2 - Update the modification Date
+ 3 - Reset the NODE_LIST
+ 4 - Broadcast the FILE_TABLE
+Node:
+ 1 - Compare the modified date.
+ 2 - If it has the older file row then do the following:
+      a. Delete the local file physically and from the file table row.
+      b. Request file from source using the received nodelist of the received filetable.
+      c. On Successful replication of file append the nodelist with your ip and add it to file table
 4.Add actualDelete after FileTable is completely updated in one Diffie round.
