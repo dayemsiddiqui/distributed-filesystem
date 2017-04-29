@@ -11,6 +11,7 @@ const main = () => {
     monitor.on("created", function (f, stat) {
       // Handle new files
       console.log(f, " created");
+      Actions.initializeFileTable();
     })
     monitor.on("changed", function (f, curr, prev) {
       // Handle file changes
