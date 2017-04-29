@@ -11,7 +11,7 @@ var console = new Console(stream, stream);
 
 
 var debug = {}
-debug.log = (message, DEV) => {
+debug.log = (message, DEV = true) => {
   if(DEV){
   console.log(message);
   }

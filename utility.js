@@ -80,13 +80,17 @@ export var syncFiles = () => {
 	for(var i = 0; i<fullPaths.pathFiles.length ; i++){
 		var trunc = fullPaths.pathFiles[i].indexOf('root/');
 		var path = fullPaths.pathFiles[i].substr(trunc);
-    local_files.push(path);
+    local_files.push('./' + path);
   }
   FILE_TABLE.GLOBAL.map((obj) => {
     var isPresent = false;
-    local_files.forEach(function(myObj) {
-      if(obj.F_ID == myObj.F_ID){
+
+    debug.log("Comparing Files For Replication....", DEV);
+    local_files.forEach((local_file_id) => {
+      debug.log("Remote File: ", obj.F_ID, " Local File: " + local_file_id);
+      if(obj.F_ID == local_file_id){
         debug.log(obj, "is present", DEV);
+        debug.log(local_file_id + " does exist locally");
         isPresent = true;
       }
     });
@@ -98,7 +102,7 @@ export var syncFiles = () => {
       }else{
         ip = obj.NODE_LIST[1];
       }
-      console.log("Requesting file from ", ip, obj);
+      debug.log("Requesting file from ", ip, obj);
       requestFile(ip, obj.F_ID);
     }
 
