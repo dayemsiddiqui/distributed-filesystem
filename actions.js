@@ -5,6 +5,7 @@ import {config} from './config';
 import {FILE_TABLE} from './fileTable'
 import {EventHandler} from './eventHandler';
 import {sendEvent} from './connection';
+import {areEqual} from './utility';
 var FullPath = require('fullpath');
 var AsciiTable = require('ascii-table')
 const util = require('util');;
@@ -170,12 +171,15 @@ static deleteDir(dir){
 static actualDelete(){
   for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
     if(FILE_TABLE.GLOBAL[i].DELETED){
-      a1 = sort(config.server_addr);
-      a2 = sort(FILE_TABLE.GLOBAL[i].DELETED_BY)
-      if (JSON.stringify(a1) === JSON.stringify(a2)){
+      console.log("IN DELETED");
+      var nodes = config.server_addr;
+      nodes.push(config.my_addr);
+      if (areEqual(nodes, FILE_TABLE.GLOBAL[i].DELETED_BY)){
         fs.unlink('./'+FILE_TABLE.GLOBAL[i].F_ID);
+        console.log("DELETED A FILE")
+      FILE_TABLE.GLOBAL.pop(i);
       }
-      FILE_TABLE.GLOBAL.remove(i);
+      
     }
   }
 }
