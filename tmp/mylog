@@ -1,170 +1,27 @@
+root/Yolo
+root/hello
 BRDCST_FILE_TBL broadcasted
-Sever started on port 3000
-172.15.126.47
-172.15.126.47
-172.15.126.47
-172.15.126.47
-172.15.126.47
-172.15.126.47
-172.15.126.47
-172.15.126.47
-Another Command: ls
-List all the files: 
+REQ_FILE_TABLE broadcasted
+Server started on port 3000
+.---------------------------------------------------------------------------------------------------------------------------------.
+|                                                        GLOBAL FILE TABLE                                                        |
+|---------------------------------------------------------------------------------------------------------------------------------|
+|    F_ID    | F_NAME | IS_DIR | IS_DEL |                         TIME_STAMP                         |     NODES     | DELETED_BY |
+|------------|--------|--------|--------|------------------------------------------------------------|---------------|------------|
+| root/Yolo  | Yolo   | true   | false  | Sat Apr 29 2017 23:18:47 GMT+0500 (Pakistan Standard Time) | 192.168.15.53 |            |
+| root/hello | hello  | false  | false  | Sat Apr 29 2017 23:18:47 GMT+0500 (Pakistan Standard Time) | 192.168.15.53 |            |
+'---------------------------------------------------------------------------------------------------------------------------------'
+
 A user connected
 In Diff Algo: 
-{ F_ID: 'Mukhi.JS',
-  F_NAME: 'Mukhi.JS',
-  TIME_STAMP: 'Tue Apr 25 2017 18:27:15 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'Yolo',
-  F_NAME: 'Yolo',
-  TIME_STAMP: 'Tue Apr 25 2017 18:27:15 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'hello',
+BRDCST_FILE_TBL broadcasted
+Creating File: ./root/Yolo
+{ F_ID: 'root/hello',
   F_NAME: 'hello',
-  TIME_STAMP: 'Tue Apr 25 2017 18:27:15 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: false }
-{ F_ID: 'newdir',
-  F_NAME: 'newdir',
-  TIME_STAMP: 'Tue Apr 25 2017 18:27:15 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'newfolder',
-  F_NAME: 'newfolder',
-  TIME_STAMP: 'Tue Apr 25 2017 18:27:15 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'shouldbecopied',
-  F_NAME: 'shouldbecopied',
-  TIME_STAMP: 'Tue Apr 25 2017 18:27:15 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'shouldnotbecopied',
-  F_NAME: 'shouldnotbecopied',
-  TIME_STAMP: 'Tue Apr 25 2017 18:27:15 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: false }
+  TIME_STAMP: 'Sat Apr 29 2017 23:18:47 GMT+0500 (Pakistan Standard Time)',
+  NODE_LIST: [ '192.168.15.53' ],
+  DIRECTORY: false,
+  DELETED: false,
+  DELETED_BY: [] }
 UPDATE_FILE_TBL handled
-A user disconnected
-A user connected
-In Diff Algo: 
-{ F_ID: 'Mukhi.JS',
-  F_NAME: 'Mukhi.JS',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'Yolo',
-  F_NAME: 'Yolo',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'hello',
-  F_NAME: 'hello',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: false }
-{ F_ID: 'newdir',
-  F_NAME: 'newdir',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'newfolder',
-  F_NAME: 'newfolder',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'shouldbecopied',
-  F_NAME: 'shouldbecopied',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'shouldnotbecopied',
-  F_NAME: 'shouldnotbecopied',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: false }
-UPDATE_FILE_TBL handled
-In Diff Algo: 
-{ F_ID: 'Mukhi.JS',
-  F_NAME: 'Mukhi.JS',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'Yolo',
-  F_NAME: 'Yolo',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'hello',
-  F_NAME: 'hello',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: false }
-{ F_ID: 'newdir',
-  F_NAME: 'newdir',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'newfolder',
-  F_NAME: 'newfolder',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'shouldbecopied',
-  F_NAME: 'shouldbecopied',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'shouldnotbecopied',
-  F_NAME: 'shouldnotbecopied',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:22 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: false }
-{ F_ID: 'shouldNotBeCreatedBitch.fuck',
-  F_NAME: 'shouldNotBeCreatedBitch.fuck',
-  TIME_STAMP: 'Tue Apr 25 2017 18:25:56 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.126.47', '172.15.45.124' ],
-  DIRECTORY: false }
-UPDATE_FILE_TBL handled
-A user disconnected
-A user connected
-In Diff Algo: 
-{ F_ID: 'Mukhi.JS',
-  F_NAME: 'Mukhi.JS',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:38 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'Yolo',
-  F_NAME: 'Yolo',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:38 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'hello',
-  F_NAME: 'hello',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:38 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: false }
-{ F_ID: 'newdir',
-  F_NAME: 'newdir',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:38 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'newfolder',
-  F_NAME: 'newfolder',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:38 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'shouldbecopied',
-  F_NAME: 'shouldbecopied',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:38 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: true }
-{ F_ID: 'shouldnotbecopied',
-  F_NAME: 'shouldnotbecopied',
-  TIME_STAMP: 'Tue Apr 25 2017 18:28:38 GMT+0500 (PKT)',
-  NODE_LIST: [ '172.15.45.124' ],
-  DIRECTORY: false }
-UPDATE_FILE_TBL handled
+SEND_FILE_TABLE handled
