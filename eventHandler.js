@@ -5,7 +5,7 @@ import {broadcast} from './connection';
 import {diffFileTable} from './utility';
 import { config } from './config';
 import { Actions } from './actions';
-import { _map } from './root/code/map-reduce';
+import { _map } from './code/map-reduce';
 
 
 export class EventHandler {
