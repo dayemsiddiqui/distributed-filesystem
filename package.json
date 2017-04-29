@@ -23,6 +23,7 @@
     "ip": "^1.1.5",
     "prompt": "^1.0.0",
     "readline-sync": "^1.4.7",
+    "rimraf": "^2.6.1",
     "socket.io": "^1.7.3",
     "socket.io-stream": "^0.9.1"
   },
