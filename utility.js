@@ -21,8 +21,8 @@ export var diffFileTable = (receivedFileTable) => {
         isPresent = true;
       }
     });
-
-    if(!isPresent){
+    var inDeletedBy = ((obj.DELETED_BY.filter((val) => { return val == config.my_addr })).length == 0) ? false:true;
+    if(!isPresent && !inDeletedBy){
       //If file is not present then add
       //TODO: implement a check if your ip address already exists in the NODE_LIST
       obj.NODE_LIST.push(config.my_addr);
@@ -31,10 +31,20 @@ export var diffFileTable = (receivedFileTable) => {
       }
       FILE_TABLE.GLOBAL.push(obj);
       isUpdated = true;
+    }else{
+        //Replace the nodelist of my local file entry row with the updated entry row nodelist
+        FILE_TABLE.GLOBAL.forEach(function(myObj) {
+          if(myObj.F_ID == obj.F_ID){
+            myObj.NODE_LIST = arrayUnique(obj.NODE_LIST.concat(myObj.NODE_LIST));
+          }
+        });
+        isUpdated = true;
+
     }
   });
 
-  //File Exists local but the given node doesnt exists
+
+
 
   //If GLOBAL File Table is updated then broadcastEvent
   if(isUpdated){
@@ -57,6 +67,7 @@ export var syncFiles = () => {
 		var trunc = fullPaths.pathFiles[i].indexOf('root/');
 		var path = fullPaths.pathFiles[i].substr(trunc);
     local_files.push(path);
+    console.log("Path: ", path);
   }
   FILE_TABLE.GLOBAL.map((obj) => {
     var isPresent = false;
@@ -67,13 +78,14 @@ export var syncFiles = () => {
       }
     });
 
-    if(!isPresent && !obj.DELETED){
+    if(!isPresent && !obj.DELETED && !obj.DIRECTORY){
       var ip = '';
       if(obj.NODE_LIST[0] != config.my_addr){
            ip = obj.NODE_LIST[0];
       }else{
         ip = obj.NODE_LIST[1];
       }
+      console.log(local_files);
       console.log("Requesting file from ", ip, obj);
       requestFile(ip, obj.F_ID);
     }
@@ -82,4 +94,16 @@ export var syncFiles = () => {
 
 
 
+}
+
+function arrayUnique(array) {
+    var a = array.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) {
+            if(a[i] === a[j])
+                a.splice(j--, 1);
+        }
+    }
+
+    return a;
 }

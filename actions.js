@@ -90,7 +90,6 @@ static initializeFileTable(){
 		var path = fullPaths.pathFolders[i].substr(trunc);
 		var trunc = fullPaths.pathFolders[i].lastIndexOf('/');
 		var dir = fullPaths.pathFolders[i].substr(trunc+1);
-
 		var f =
         {
   	      'F_ID': path,
@@ -227,6 +226,7 @@ static reflectChanges(){
         }
 
         }
+
   }
 }
 
