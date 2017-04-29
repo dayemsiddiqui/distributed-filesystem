@@ -187,27 +187,16 @@ static actualDelete(){
 
 
 static reflectChanges(){
+
   for ( var i = 0;i<FILE_TABLE.GLOBAL.length;i++)
   {
     var file = FILE_TABLE.GLOBAL[i];
-    for (var j =0; j<FILE_TABLE.GLOBAL.length; j++)
-    {
-      if(file.DIRECTORY){
-        var present = false;
-        if(file.NODE_LIST[j] == config.my_addr){
-          present = true;
-          break;
-        }
-      }
-    }
-    if(!present){
-          debug.log("Creating File: "+ file.F_ID, DEV)
+    var present = false;
+     if(!file.DIRECTORY){ continue; }
+          console.log("Creating File: "+ file.F_ID, DEV)
           if (!fs.existsSync(file.F_ID)){
           fs.mkdirSync(file.F_ID);
         }
-
-        }
-
   }
 }
 
