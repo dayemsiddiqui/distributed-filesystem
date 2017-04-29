@@ -38,9 +38,10 @@ export var diffFileTable = (receivedFileTable) => {
         FILE_TABLE.GLOBAL.forEach(function(myObj) {
           if(myObj.F_ID == obj.F_ID && !areEqual(myObj.NODE_LIST,obj.NODE_LIST)){
             myObj.NODE_LIST = arrayUnique(obj.NODE_LIST.concat(myObj.NODE_LIST));
+            isUpdated = true;
           }
         });
-        isUpdated = true;
+
 
     }
   });
