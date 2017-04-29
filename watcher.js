@@ -52,7 +52,7 @@ watcher.unwatch('new-file*');
 chokidar.watch('./root', {
   persistent: true,
  
-  ignored: 'tmp',
+  ignored: 'tmp ',
   ignoreInitial: false,
   followSymlinks: true,
   cwd: '.',
