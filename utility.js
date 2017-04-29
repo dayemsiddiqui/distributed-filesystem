@@ -33,12 +33,15 @@ export var diffFileTable = (receivedFileTable) => {
       isUpdated = true;
     }else{
         //Replace the nodelist of my local file entry row with the updated entry row nodelist
+
+
         FILE_TABLE.GLOBAL.forEach(function(myObj) {
-          if(myObj.F_ID == obj.F_ID){
+          if(myObj.F_ID == obj.F_ID && !areEqual(myObj.NODE_LIST,obj.NODE_LIST)){
             myObj.NODE_LIST = arrayUnique(obj.NODE_LIST.concat(myObj.NODE_LIST));
+            isUpdated = true;
           }
         });
-        isUpdated = true;
+
 
     }
   });
@@ -106,4 +109,13 @@ function arrayUnique(array) {
     }
 
     return a;
+}
+
+function areEqual(a, b) {
+  if ( a.length != b.length) {
+    return false;
+  }
+  return a.filter(function(i) {
+    return !b.includes(i);
+  }).length === 0;
 }
