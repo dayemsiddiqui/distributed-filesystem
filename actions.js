@@ -9,6 +9,7 @@ import {areEqual} from './utility';
 var FullPath = require('fullpath');
 var AsciiTable = require('ascii-table')
 const util = require('util');;
+var rmdir = require('rimraf');
 
 
 var PATH = ROOT;
@@ -170,20 +171,49 @@ static deleteDir(dir){
 
 static actualDelete(){
   for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
+    if(FILE_TABLE.GLOBAL[i].DIRECTORY) {continue};
     if(FILE_TABLE.GLOBAL[i].DELETED){
       console.log("IN DELETED");
       var nodes = config.server_addr;
       nodes.push(config.my_addr);
+
       if (areEqual(nodes, FILE_TABLE.GLOBAL[i].DELETED_BY)){
-        fs.unlink(FILE_TABLE.GLOBAL[i].F_ID);
-        console.log("DELETED A FILE")
-      FILE_TABLE.GLOBAL.pop
-      (i);
+          fs.unlink(FILE_TABLE.GLOBAL[i].F_ID);
+          console.log("DELETED A FILE")
+        }
+        
+      FILE_TABLE.GLOBAL.pop(i);
+      }
+      
+    }
+    this.actualDeleteDir();
+  }
+
+static actualDeleteDir(){
+  for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
+    if(!FILE_TABLE.GLOBAL.DIRECTORY) {continue};
+    dir = FILE_TABLE.GLOBAL[i].F_ID;
+    if(FILE_TABLE.GLOBAL[i].DELETED){
+      console.log("IN DELETED");
+      var nodes = config.server_addr;
+      nodes.push(config.my_addr);
+
+      if (areEqual(nodes, FILE_TABLE.GLOBAL[i].DELETED_BY)){
+          rimraf(FILE_TABLE.GLOBAL[i].F_ID, function () { console.log('done'); });
+            for (var i = 0; i<FILE_TABLE.GLOBAL.length; i++){
+              if(FILE_TABLE.GLOBAL[i].F_ID.includes(dir)){
+                FILE_TABLE.GLOBAL.pop(i);
+              }
+            }
+        }
+
+        
+      FILE_TABLE.GLOBAL.pop(i);
       }
       
     }
   }
-}
+
 
 
 static reflectChanges(){
