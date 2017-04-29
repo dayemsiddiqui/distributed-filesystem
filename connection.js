@@ -77,7 +77,6 @@ export function initServer(){
     });
 
     socket.on('event', function(data){
-      console.log("Single Socket Message Received: ", data);
       EventHandler.handleEvent(data);
       console.log("Now as a server I am gonna respond as: I am alive");
       socket.emit('message', "Event Successfully Received (Sent By: single socket server)");

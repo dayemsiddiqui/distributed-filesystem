@@ -80,7 +80,6 @@ export var syncFiles = () => {
 		var trunc = fullPaths.pathFiles[i].indexOf('root/');
 		var path = fullPaths.pathFiles[i].substr(trunc);
     local_files.push(path);
-    console.log("Path: ", path);
   }
   FILE_TABLE.GLOBAL.map((obj) => {
     var isPresent = false;
@@ -98,7 +97,6 @@ export var syncFiles = () => {
       }else{
         ip = obj.NODE_LIST[1];
       }
-      console.log(local_files);
       console.log("Requesting file from ", ip, obj);
       requestFile(ip, obj.F_ID);
     }
