@@ -4,9 +4,11 @@ import debug from './debug';
 import {config} from './config';
 import {FILE_TABLE} from './fileTable'
 import {EventHandler} from './eventHandler';
-var FullPath = require('fullpath');
-var AsciiTable = require('ascii-table');
 import {sendEvent} from './connection';
+var FullPath = require('fullpath');
+var AsciiTable = require('ascii-table')
+const util = require('util');;
+
 
 var PATH = ROOT;
 export class Actions {
@@ -88,12 +90,12 @@ static initializeFileTable(){
 		var path = fullPaths.pathFolders[i].substr(trunc);
 		var trunc = fullPaths.pathFolders[i].lastIndexOf('/');
 		var dir = fullPaths.pathFolders[i].substr(trunc+1);
-		console.log(file);
+
 		var f =
         {
   	      'F_ID': path,
   	    	'F_NAME': dir,
-  	    	'TIME_STAMP': new Date().toString(),
+  	    	'TIME_STAMP': mtime,
   	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  true,
           'DELETED' : false,
@@ -108,12 +110,21 @@ static initializeFileTable(){
 		var path = fullPaths.pathFiles[i].substr(trunc);
 		var trunc = fullPaths.pathFiles[i].lastIndexOf('/');
 		var file = fullPaths.pathFiles[i].substr(trunc+1);
-		console.log(file);
+    var mtime;
+    var j = 0;
+    fs.stat('./'+path, function(err, stats){
+      //console.log(stats);
+      mtime = new Date(util.inspect(stats.mtime));
+      //console.log(file,':',mtime);
+    });
+    //console.log(file,':',mtime);
+    //console.log(mtime);
+
 		var f =
         {
 	        'F_ID': path,
 	    	'F_NAME': file,
-	    	'TIME_STAMP': new Date().toString(),
+	    	'TIME_STAMP': mtime,
 	    	'NODE_LIST': [config.my_addr],
 	        'DIRECTORY':  false,
           'DELETED' : false,
@@ -187,7 +198,7 @@ static actualDelete(){
       a1 = sort(config.server_addr);
       a2 = sort(FILE_TABLE.GLOBAL[i].DELETED_BY)
       if (JSON.stringify(a1) === JSON.stringify(a2)){
-
+        fs.unlink('./'+FILE_TABLE.GLOBAL.F_ID);
       }
 
     }
@@ -207,15 +218,15 @@ static reflectChanges(){
           present = true;
           break;
         }
-        if(!present){
+      }
+    }
+    if(!present){
           debug.log("Creating File: "+ file.F_ID, DEV)
           if (!fs.existsSync(file.F_ID)){
           fs.mkdirSync(file.F_ID);
         }
 
         }
-      }
-    }
   }
 }
 
