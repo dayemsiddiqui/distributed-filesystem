@@ -181,10 +181,10 @@ static actualDelete(){
           fs.unlink(FILE_TABLE.GLOBAL[i].F_ID);
           console.log("DELETED A FILE")
         }
-        
+
       FILE_TABLE.GLOBAL.pop(i);
       }
-      
+
     }
     this.actualDeleteDir();
   }
@@ -207,10 +207,10 @@ static actualDeleteDir(){
             }
         }
 
-        
+
       FILE_TABLE.GLOBAL.pop(i);
       }
-      
+
     }
   }
 
