@@ -73,8 +73,6 @@ export function initServer(){
   io_file_server.on('connection', function(socket){
     socket.emit('message', "I acknowledge your connection");
     socket.on('message', function(data){
-      console.log("Single Socket Message Received: ", data);
-      console.log("Now as a server I am gonna respond as: I am alive");
       socket.emit('message', "I am alive (Sent By: single socket server)");
     });
 

@@ -36,9 +36,10 @@ export var diffFileTable = (receivedFileTable) => {
 
 
         FILE_TABLE.GLOBAL.forEach(function(myObj) {
-          if(myObj.F_ID == obj.F_ID && obj.DELETED){
+          if(myObj.F_ID == obj.F_ID && obj.DELETED && !myObj.DELETED){
             myObj.DELETED = true;
             myObj.DELETED_BY.push(config.my_addr);
+            arrayUnique(myObj.DELETED_BY);
             isUpdated = true;
           }
           if(myObj.F_ID == obj.F_ID && !areEqual(myObj.NODE_LIST,obj.NODE_LIST)){
