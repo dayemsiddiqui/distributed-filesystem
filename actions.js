@@ -173,9 +173,9 @@ static actualDelete(){
       a1 = sort(config.server_addr);
       a2 = sort(FILE_TABLE.GLOBAL[i].DELETED_BY)
       if (JSON.stringify(a1) === JSON.stringify(a2)){
-        fs.unlink('./'+FILE_TABLE.GLOBAL.F_ID);
+        fs.unlink('./'+FILE_TABLE.GLOBAL[i].F_ID);
       }
-
+      FILE_TABLE.GLOBAL.remove(i);
     }
   }
 }

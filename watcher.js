@@ -49,10 +49,10 @@ watcher.unwatch('new-file*');
 //watcher.close();
  
 // Full list of options. See below for descriptions. (do not use this example) 
-chokidar.watch('./root/', {
+chokidar.watch('./root', {
   persistent: true,
  
-  ignored: '*.ign',
+  ignored: 'tmp',
   ignoreInitial: false,
   followSymlinks: true,
   cwd: '.',
